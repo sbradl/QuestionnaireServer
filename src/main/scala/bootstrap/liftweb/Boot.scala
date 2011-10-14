@@ -11,6 +11,7 @@ import Loc._
 import mapper._
 
 import code.model._
+import code.lib.QuestionnaireServices
 
 
 /**
@@ -41,18 +42,15 @@ class Boot {
 
     // Build SiteMap
     def sitemap = SiteMap(
-      Menu.i("Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
-
-      // more complex because this menu allows anything in the
-      // /static path to be visible
-      Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
-	       "Static Content")))
+      Menu.i("Home") / "index" >> User.AddUserMenusAfter)
 
     def sitemapMutators = User.sitemapMutator
 
     // set the sitemap.  Note if you don't want access control for
     // each page, just comment this line out.
     LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
+    
+    LiftRules.dispatch.append(QuestionnaireServices)
 
     // Use jQuery 1.4
     LiftRules.jsArtifacts = net.liftweb.http.js.jquery.JQuery14Artifacts

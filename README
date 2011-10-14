@@ -1,0 +1,10 @@
+Start Webserver
+---------------
+
+Linux
+-----
+./sbt update ~jetty-run
+
+Windows
+-------
+sbt.bat update ~jetty-run
