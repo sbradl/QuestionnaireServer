@@ -54,7 +54,21 @@ class Boot {
           Menu.i("SETUP") / "lessons" / "basics" / "setup",
           Menu.i("HELLO_WORLD") / "lessons" / "basics" / "hello_world",
           Menu.i("USER_INTERFACES") / "lessons" / "basics" / "ui",
-          Menu.i("PROJECT") / "lessons" / "basics" / "project")))
+          Menu.i("PROJECT") / "lessons" / "basics" / "project"),
+        Menu.i("WEBSERVICES") / "lessons" / "ws" / "index" submenus (
+          Menu.i("CONSUME") / "lessons" / "ws" / "consume",
+          Menu.i("PUT") / "lessons" / "ws" / "put",
+          Menu.i("PROJECT_WS") / "lessons" / "ws" / "project"),
+        Menu.i("SENSORS_SERVICES") / "lessons" / "sensors_and_services" / "index" submenus (
+          Menu.i("STORAGE") / "lessons" / "sensors_and_services" / "storage",
+          Menu.i("GEOLOCATION") / "lessons" / "sensors_and_services" / "geolocation",
+          Menu.i("CAMERA") / "lessons" / "sensors_and_services" / "camera",
+          Menu.i("PROJECT_SENSORS_AND_SERVICES")/ "lessons" / "sensors_and_services" / "project"),
+        Menu.i("VISUALIZATION") / "lessons" / "visualization" / "index" submenus (
+          Menu.i("TABLES") / "lessons" / "visualization" / "tables",
+          Menu.i("DIAGRAMS") / "lessons" / "visualization" / "diagrams",
+          Menu.i("PROJECT_STATISTICS") / "lessons" / "visualization" / "project")
+        ))
 
     def sitemapMutators = User.sitemapMutator
 
