@@ -47,7 +47,8 @@ class Boot {
       Menu.i("HOME") / "index" submenus (
         Menu.i("GET_QUESTIONNAIRE") / "static" / "get",
         Menu.i("VERIFY_RESULTS") / "static" / "verify",
-        Menu.i("UPLOAD_RESULTS") / "static" / "put"))
+        Menu.i("UPLOAD_RESULTS") / "static" / "put",
+        Menu.i("STATISTICS") / "static" / "statistics"))
 
     def sitemapMutators = User.sitemapMutator
 
