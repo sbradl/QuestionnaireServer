@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Home</title>
+</head>
+<body class="lift:content_id=main">
+	<div id="main" class="lift:surround?with=default;at=content">
+
+		<h2>Eingabe validieren</h2>
+		<p>
+			Unter der URL <span><a
+				href="http://localhost:8080/questionnaire/verify.xml">http://localhost:8080/questionnaire/verify.xml</a></span>
+			steht ein Service zur Verfügung, welcher in Umfragen eingegebene
+			Daten verifiziert. Dazu muss die Umfrage mit einem HTTP PUT Request
+			an den Server gesendet werden.
+		</p>
+
+		<p style="margin-top: 32px; text-indent: 0px; font-weight: bold">
+		<span style="color: #ff0000">Wichtig</span>: Es muss unbedingt der Content-Type "text/xml" für die
+			Anfrage definiert werden. Anderenfalls sendet der Server eine
+			Fehlermeldung (Status 404).</p>
+	</div>
+</body>
+</html>
