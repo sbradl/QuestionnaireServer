@@ -48,7 +48,14 @@ class Boot {
         Menu.i("GET_QUESTIONNAIRE") / "static" / "get",
         Menu.i("VERIFY_RESULTS") / "static" / "verify",
         Menu.i("UPLOAD_RESULTS") / "static" / "put",
-        Menu.i("STATISTICS") / "static" / "statistics"))
+        Menu.i("STATISTICS") / "static" / "statistics"),
+      Menu.i("LESSONS") / "lessons" / "index" submenus (
+        Menu.i("BASICS") / "lessons" / "basics" / "index" submenus (
+            Menu.i("HELLO_WORLD") / "lessons" / "basics" / "hello_world",
+            Menu.i("USER_INTERFACES") / "lessons" / "basics" / "ui",
+            Menu.i("PROJECT") / "lessons" / "basics" / "project"
+        )
+      ))
 
     def sitemapMutators = User.sitemapMutator
 
