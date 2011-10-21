@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-<title>Home</title>
+<title>Tutorial: Hello World</title>
 </head>
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
-		<h2>Hello World Tutorial</h2>
+		<h2>Hello World</h2>
 		<h3>Einleitung</h3>
 		<p>In diesem Tutorial geht es um die Erstellung eines typischen
 			"Hello World"-Programms für die Android-Plattform. Dabei wird auf die
@@ -18,67 +18,82 @@
 			vorhanden ist und korrekt angezeigt wird.</p>
 
 		<h3>Erstellung eines neuen Projekts</h3>
-		<p>Der erste Schritt besteht in der Erstellung eines neuen
-			Projekts. Dazu wird in Eclipse über das File-Menu der Punkt New und
-			anschließend Other ausgewählt. Im daraufhin erscheinenden Fenster
-			findet wählt man Android => Android Project. Mit einem Klick auf Next
-			gelangt man zur nächsten Seite. Hier muss ein Projektname angegeben
-			werden. Als Build Target wählen wir "Android 3.0". Außerdem muss der
-			Name des Packages angegeben werden.</p>
+		<p>
+			Der erste Schritt besteht in der Erstellung eines neuen Projekts.
+			Dazu wird in Eclipse über das <span class="tt">File</span>-Menu der
+			Punkt <span class="tt">New</span> und anschließend <span class="tt">Other</span>
+			ausgewählt. Im daraufhin erscheinenden Fenster findet wählt man <span
+				class="tt">Android => Android Project</span>. Mit einem Klick auf <span
+				class="tt">Next</span> gelangt man zur nächsten Seite. Hier muss ein
+			Projektname angegeben werden. Als Build Target wählen wir "Android
+			3.0". Außerdem muss der Name des Packages angegeben werden.
+		</p>
 		<p>
 			<img src="/images/lessons/basics/NewProject.png" />
 		</p>
 
-		<p>Auf der nächsten Seite wird ein Haken bei Create a Test Project
-			gesetzt. Nach einem Klick auf Finish wird das Projekt erzeugt. Dieses
-			kann nun mit Run => Run As => Android Application gestartet werden.
-			Wenn das Endgerät zu diesem Zeitpunkt angeschlossen ist, so wird die
-			Anwendung direkt auf das Gerät kopiert und gestartet. Sollte keine
-			Gerät angeschlossen sein, so wird folgende Meldung angezeigt:</p>
+		<p>
+			Auf der nächsten Seite wird ein Haken bei <span class="tt">Create
+				a Test Project</span> gesetzt. Nach einem Klick auf <span class="tt">Finish</span>
+			wird das Projekt erzeugt. Dieses kann nun mit <span class="tt">Run
+				=> Run As => Android Application</span> gestartet werden. Wenn das Endgerät
+			zu diesem Zeitpunkt angeschlossen ist, so wird die Anwendung direkt
+			auf das Gerät kopiert und gestartet. Sollte keine Gerät angeschlossen
+			sein, so wird folgende Meldung angezeigt:
+		</p>
 		<p>
 			<img src="/images/lessons/basics/NoTargetsFound.png" />
 		</p>
 
-		<p>Klicken Sie auf No und stellen Sie sicher, dass ihr Endgerät
-			angeschlossen ist. Wahlweise kann auch nach einem Klick auf Yes ein
-			virtuelles Gerät erstellt werden, welches einen Emulator startet.</p>
-
+		<p>
+			Klicken Sie auf <span class="tt">No</span> und stellen Sie sicher,
+			dass ihr Endgerät angeschlossen ist. Wahlweise kann auch nach einem
+			Klick auf <span class="tt">Yes</span> ein virtuelles Gerät erstellt
+			werden, welches einen Emulator startet.
+		</p>
 
 		<h3>Auslagerung von Zeichenketten</h3>
-		<p>Der Eclipse Project Wizard erstellt automatisch die Datei
-			res/values/strings.xml. In dieser befinden sich bereits die
-			auszulagernden Strings. In der Datei res/layout/main.xml kann der
-			Zugriff innerhalb der Anwendung betrachtet werden. Will man auf einen
-			nichtvorhandenen String zugreifen, so wird bereits durch die IDE ein
-			Fehler angezeigt:</p>
+		<p>
+			Der Eclipse Project Wizard erstellt automatisch die Datei <span
+				class="tt">res/values/strings.xml</span>. In dieser befinden sich
+			bereits die auszulagernden Strings. In der Datei <span class="tt">res/layout/main.xml</span>
+			kann der Zugriff innerhalb der Anwendung betrachtet werden. Will man
+			auf einen nichtvorhandenen String zugreifen, so wird bereits durch
+			die IDE ein Fehler angezeigt:
+		</p>
 		<p>
 			<img src="/images/lessons/basics/UnknownString.png" />
 		</p>
-		<p>Auch der programmatische Zugriff auf nichtvorhandene Ressource
+		<p>Auch der programmatische Zugriff auf nichtvorhandene Ressourcen
 			führt zu einem Fehler.</p>
 
 		<h3>Testen</h3>
-		<p>Der Test, welcher im folgenden Abschnitt erstellt wird soll
+		<p>Der Test, welcher im folgenden Abschnitt erstellt wird, soll
 			zwei Dinge sicherstellen. Zum Ersten wird getestet, ob die Anwendung
 			korrekt gestartet wird und zum Zweiten, dass der auf dem Bildschirm
-			angezeigte Text der selbe ist, wie in der Ressourcendatei.</p>
+			angezeigte Text der selbe ist, wie in der Ressourcendatei angegeben.</p>
 
 		<h4>Vorbereitung</h4>
-		<p>Um auf ein Element der Benutzeroberfläche zugreifen zu können,
-			muss dieses eine eindeutige ID besitzen. In der Datei
-			res/layout/main.xml wird diese dem TextView-Element mit einem
-			Attribut zugeordnet: android:id="@+id/textview" TODO: was genau
-			bedeutet +id?</p>
+		<p>
+			Um auf ein Element der Benutzeroberfläche zugreifen zu können, muss
+			dieses eine eindeutige ID besitzen. In der Datei <span class="tt">res/layout/main.xml</span>
+			wird diese dem <span class="tt">TextView</span>-Element mit einem
+			Attribut zugeordnet: <span class="tt">android:id="@+id/textview"</span>
+			TODO: was genau bedeutet +id?
+		</p>
 
 		<h4>Erstellung der Testklasse</h4>
-		<p>Um eine neue Testklasse zu erstellen, wird per Rechtsklick auf
-			das Testpackage das Menu New => Class aufgerufen. Als Name geben wir
-			"HelloWorldTest" ein. Also Superklasse wird
-			android.test.ActivityInstrumentationTestCase2&lt;HelloWorldActivity&gt;
-			angegeben. Eine import-Anweisung für die zu testenden Activity wird
-			hierbei nicht automatisch erstellt und muss somit per Hand eingegeben
-			werden. Auch ein Konstruktor muss explizit definiert werden. Der
-			gesamte Quelltext der Testklasse sollte nun wie folgt aussehen:</p>
+		<p>
+			Um eine neue Testklasse zu erstellen, wird per Rechtsklick auf das
+			Testpackage das Menu <span class="tt">New => Class</span> aufgerufen.
+			Als Name geben wir "HelloWorldTest" ein. Also Superklasse wird <span
+				class="tt">android.test.ActivityInstrumentationTestCase2&lt;HelloWorldActivity&gt;</span>
+			angegeben. Eine <span class="tt">import</span>-Anweisung für die zu
+			testenden Activity wird hierbei nicht automatisch erstellt und muss
+			somit per Hand eingegeben werden. Auch ein Konstruktor muss explizit
+			definiert werden. Der gesamte Quelltext der Testklasse sollte nun wie
+			folgt aussehen:
+		</p>
 		<pre class="sh_java">package de.hszigr.mobileapps.helloworld.test;
 
 import de.hszigr.mobileapps.helloworld.HelloWorldActivity;
@@ -93,20 +108,25 @@ public class HelloWorldTest extends ActivityInstrumentationTestCase2&lt;HelloWor
 }</pre>
 
 		<h4>Die setUp()-Methode</h4>
-		<p>Der nächste Schritt besteht in der Implementation der von JUnit
+		<p>
+			Der nächste Schritt besteht in der Implementation der von JUnit
 			bekannten Methode setUp(). In dieser wird die Activity gestartet und
-			das TextView-Element gespeichert, welches den auszugebenden Text
-			enthält. Außerdem speichern wir den erwarteten Text aus der
-			Ressourcendatei in einem Feld ab. Um eine Referenz auf das
-			TextView-Element zu erhalten, wird die Methode findViewById() der
-			Activity-Klasse aufgerufen. Der Rückgabewert muss dann aber noch in
-			ein Objekt vom Typ TextView gecastet werden.</p>
+			das <span class="tt">TextView</span>-Element gespeichert, welches den
+			auszugebenden Text enthält. Außerdem speichern wir den erwarteten
+			Text aus der Ressourcendatei in einem Feld ab. Um eine Referenz auf
+			das <span class="tt">TextView</span>-Element zu erhalten, wird die
+			Methode <span class="tt">findViewById()</span> der Activity-Klasse
+			aufgerufen. Der Rückgabewert muss dann aber noch in ein Objekt vom
+			Typ <span class="tt">TextView</span> gecastet werden.
+		</p>
 
 		<h4>Vorbedingungen testen</h4>
-		<p>Als nächstes wird eine Testmethode erstellt, welche
-			sicherstellt, dass die Benutzeroverfläche auch das entsprechende
-			TextView-Element enthält. Dieser Test besteht einfach darin, zu
-			testen, ob die Referenz ungleich null ist.</p>
+		<p>
+			Als nächstes wird eine Testmethode erstellt, welche überprüft, dass
+			die Benutzeroverfläche auch das entsprechende <span class="tt">TextView</span>-Element
+			enthält. Dieser Test besteht einfach darin zu testen, ob die Referenz
+			ungleich <span class="tt">null</span> ist.
+		</p>
 		<pre class="sh_java">public void testPreconditions() {
     assertNotNull(textView);
 }</pre>
@@ -152,14 +172,15 @@ public class HelloWorldTest extends
     public void testText() {
         assertEquals(expectedString, (String)textView.getText());
     }
-}
-		</pre>
+}</pre>
 
 		<h4>Ausführung der Tests</h4>
-		<p>Zum Starten des Tests wird mit einem Rechtklick auf die
-			Testklasse das Menu Run As => Android JUnit Test aufgerufen. Die
-			Ergebnisse des Tests werden so präsentiert, wie es von normalen
-			JUnit-Tests her bekannt ist.</p>
+		<p>
+			Zum Starten des Tests wird mit einem Rechtklick auf die Testklasse
+			das Menu <span class="tt">Run As => Android JUnit Test</span>
+			aufgerufen. Die Ergebnisse des Tests werden so präsentiert, wie es
+			von normalen JUnit-Tests her bekannt ist.
+		</p>
 	</div>
 </body>
 </html>

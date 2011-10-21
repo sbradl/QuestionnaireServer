@@ -51,11 +51,10 @@ class Boot {
         Menu.i("STATISTICS") / "static" / "statistics"),
       Menu.i("LESSONS") / "lessons" / "index" submenus (
         Menu.i("BASICS") / "lessons" / "basics" / "index" submenus (
-            Menu.i("HELLO_WORLD") / "lessons" / "basics" / "hello_world",
-            Menu.i("USER_INTERFACES") / "lessons" / "basics" / "ui",
-            Menu.i("PROJECT") / "lessons" / "basics" / "project"
-        )
-      ))
+          Menu.i("SETUP") / "lessons" / "basics" / "setup",
+          Menu.i("HELLO_WORLD") / "lessons" / "basics" / "hello_world",
+          Menu.i("USER_INTERFACES") / "lessons" / "basics" / "ui",
+          Menu.i("PROJECT") / "lessons" / "basics" / "project")))
 
     def sitemapMutators = User.sitemapMutator
 
@@ -63,17 +62,17 @@ class Boot {
     // each page, just comment this line out.
     LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
 
-//    def localeCalculator(request: Box[HTTPRequest]): java.util.Locale = {
-//      def localeFromString(in: String): Locale = {
-//        val x = in.split("_").toList; new Locale(x.head, x.last)
-//      }
-//
-//      S.param("locale") match {
-//        case Full(null) => Locale.getDefault()
-//        case f @ Full(selectedLocale) => tryo(localeFromString(selectedLocale)) openOr(Locale.getDefault())
-//        case _ => Locale.getDefault()
-//      }
-//    }
+    //    def localeCalculator(request: Box[HTTPRequest]): java.util.Locale = {
+    //      def localeFromString(in: String): Locale = {
+    //        val x = in.split("_").toList; new Locale(x.head, x.last)
+    //      }
+    //
+    //      S.param("locale") match {
+    //        case Full(null) => Locale.getDefault()
+    //        case f @ Full(selectedLocale) => tryo(localeFromString(selectedLocale)) openOr(Locale.getDefault())
+    //        case _ => Locale.getDefault()
+    //      }
+    //    }
     def localeCalculator(request: Box[HTTPRequest]) = new Locale("de", "DE")
 
     LiftRules.localeCalculator = localeCalculator _
