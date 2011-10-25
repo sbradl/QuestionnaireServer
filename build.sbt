@@ -1,11 +1,14 @@
 name := "QuestionnaireServer"
  
-scalaVersion := "2.9.0-1"
+scalaVersion := "2.9.1"
+
+resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
+
+resolvers += "Scala Tools Snapshots" at "http://scala-tools.org/repo-snapshots"
+
+resolvers += "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots"
  
 seq(webSettings: _*)
-
-// If using JRebel
-jettyScanDirs := Nil
  
 libraryDependencies ++= {
   val liftVersion = "2.4-M4"
@@ -18,13 +21,10 @@ libraryDependencies ++= {
 }
  
 libraryDependencies ++= Seq(
-  "junit" % "junit" % "4.8.2" % "test->default",
-  "org.mortbay.jetty" % "jetty" % "6.1.26" % "jetty",
+  "org.eclipse.jetty" % "jetty-webapp" % "8.0.3.v20111011" % "container",
   "javax.servlet" % "servlet-api" % "2.5" % "provided->default",
   "com.h2database" % "h2" % "1.3.158",
-  "org.slf4j" % "slf4j-log4j12" % "1.6.1",
-  "org.scalatest" % "scalatest_2.9.0-1" % "1.6.1" % "test->default",
-  "org.mockito" % "mockito-all" % "1.8.5" % "test->default"
+  "org.slf4j" % "slf4j-log4j12" % "1.6.1"
 )
 
 scalacOptions in Compile ++= Seq(
