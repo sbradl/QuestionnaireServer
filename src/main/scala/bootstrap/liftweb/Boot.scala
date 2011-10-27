@@ -37,7 +37,11 @@ class Boot {
     // Use Lift's Mapper ORM to populate the database
     // you don't need to use Mapper to use Lift... use
     // any ORM you want
-    Schemifier.schemify(true, Schemifier.infoF _, User)
+    Schemifier.schemify(true, Schemifier.infoF _, User, Questionnaire, Question, Choice)
+    
+    if(Questionnaire.findAll isEmpty) {
+      Questionnaire.createDefaultQuestionnaire
+    }
 
     // where to search snippet
     LiftRules.addToPackages("code")
