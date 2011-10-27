@@ -8,15 +8,28 @@ import net.liftweb.common.Box
 object QuestionnaireServices extends RestHelper {
   serve {
     case "questionnaire" :: "get" :: _ XmlGet _ => Questionnaire.findAll.head.markup
-    
+
     case "questionnaire" :: "statistics" :: id :: _ XmlGet _ =>
-      <statistics for={id} />
+      <statistics for={ id }/>
 
     case "questionnaire" :: "verify" :: _ XmlPut input -> _ =>
-      println("Got input: " + input)
-      <validation status="success" />
-      
+      println("Input: " + input)
+      val messages = Questionnaire.validate(input)
+
+      val status = messages match {
+        case List() => "success"
+        case _ => "failed"
+      }
+
+      <validation status={ status }>
+        {
+          messages map {
+            msg => <message>{msg}</message>
+          }
+        }
+      </validation>
+
     case "questionnaire" :: "put" :: _ XmlPut input -> _ =>
-      <success />
+      <failed/>
   }
 }

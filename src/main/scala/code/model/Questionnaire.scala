@@ -1,8 +1,63 @@
 package code.model
 
 import net.liftweb.mapper._
+import scala.xml.Node
+import net.liftweb.common.Empty
+import net.liftweb.common.Full
+import net.liftweb.common.Failure
 
 object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnaire] {
+
+  def validate(input: Node) = Questionnaire.find(By(Questionnaire.id, (input \ "@forQuestionnaire").text.toLong)) match {
+    case Full(questionnaire) => {
+      var messages = List[String]()
+      
+      input \ "answer" foreach {
+        answerNode => {
+          val questionID = (answerNode \ "@forQuestion").text.toLong
+          val answerText = answerNode.text
+          val questionBox = Question.find(By(Question.id, questionID), By(Question.questionnaire, questionnaire))
+          
+          questionBox match {
+            case Full(question) => {
+              question.answerType.is match {
+                case "location" => {
+                  val parts = answerText.split(",")
+                  
+                  try {
+                    val lat = parts(0).toDouble
+                    val lng = parts(1).toDouble
+                  } catch {
+                    case _ => messages ++= List("INVALID_LOCATION")
+                  }
+                }
+                
+                case "choice" => {
+                  
+                }
+                
+                case "multichoice" => {
+                  
+                }
+                
+                case "attachment" => {
+                  
+                }
+                
+                case _ =>
+              }
+            }
+            case _ => {
+              messages ++= List("INVALID_QUESTION_ID")
+            }
+          }
+        }
+      }
+      
+      messages
+    }
+    case _ => List("INVALID_ID")
+  }
 
   def createDefaultQuestionnaire {
     val questionnaire = Questionnaire.create
@@ -82,17 +137,18 @@ class Questionnaire extends LongKeyedMapper[Questionnaire] with IdPK with OneToM
         questions map {
           question: Question =>
             {
-              <question id={ question.id.is.toString } type={question.answerType.is}>
-              {question.text.is}
-              {
-                if(!question.choices.isEmpty) {
-                  question.choices map {
-                    choice: Choice => {
-                      <choice id={choice.id.is.toString}>{choice.text.is}</choice>
+              <question id={ question.id.is.toString } type={ question.answerType.is }>
+                { question.text.is }
+                {
+                  if (!question.choices.isEmpty) {
+                    question.choices map {
+                      choice: Choice =>
+                        {
+                          <choice id={ choice.id.is.toString }>{ choice.text.is }</choice>
+                        }
                     }
                   }
                 }
-              }
               </question>
             }
         }
