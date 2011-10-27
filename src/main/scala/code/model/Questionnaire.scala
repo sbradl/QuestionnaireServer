@@ -11,49 +11,68 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
   def validate(input: Node) = Questionnaire.find(By(Questionnaire.id, (input \ "@forQuestionnaire").text.toLong)) match {
     case Full(questionnaire) => {
       var messages = List[String]()
-      
+
       input \ "answer" foreach {
-        answerNode => {
-          val questionID = (answerNode \ "@forQuestion").text.toLong
-          val answerText = answerNode.text
-          val questionBox = Question.find(By(Question.id, questionID), By(Question.questionnaire, questionnaire))
-          
-          questionBox match {
-            case Full(question) => {
-              question.answerType.is match {
-                case "location" => {
-                  val parts = answerText.split(",")
-                  
-                  try {
-                    val lat = parts(0).toDouble
-                    val lng = parts(1).toDouble
-                  } catch {
-                    case _ => messages ++= List("INVALID_LOCATION")
+        answerNode =>
+          {
+            val questionID = (answerNode \ "@forQuestion").text.toLong
+            val answerText = answerNode.text
+            val questionBox = Question.find(By(Question.id, questionID), By(Question.questionnaire, questionnaire))
+
+            questionBox match {
+              case Full(question) => {
+                question.answerType.is match {
+                  case "location" => {
+                    val parts = answerText.split(",")
+
+                    try {
+                      val lat = parts(0).toDouble
+                      val lng = parts(1).toDouble
+                    } catch {
+                      case _ => messages ++= List("INVALID_LOCATION")
+                    }
                   }
+
+                  case "choice" => {
+                    val choiceID = answerText.toLong
+                    question.choices.exists {
+                      choice: Choice => choice.id.is == choiceID
+                    } match {
+                      case true =>
+                      case false => messages ++= List("INVALID_CHOICE", choiceID.toString, question.choices.map (_.id.is).mkString(","))
+                    }
+                  }
+
+                  case "multichoice" => {
+                    val choiceIDs = answerText.split(",") map (_.toLong)
+
+                    choiceIDs foreach {
+                      choiceID: Long =>
+                        {
+                          question.choices.exists {
+                            choice: Choice => choice.id.is == choiceID
+                          } match {
+                            case true =>
+                            case false => messages ++= List("INVALID_CHOICE")
+                          }
+                        }
+                    }
+                  }
+
+                  case "attachment" => {
+
+                  }
+
+                  case _ =>
                 }
-                
-                case "choice" => {
-                  
-                }
-                
-                case "multichoice" => {
-                  
-                }
-                
-                case "attachment" => {
-                  
-                }
-                
-                case _ =>
+              }
+              case _ => {
+                messages ++= List("INVALID_QUESTION_ID")
               }
             }
-            case _ => {
-              messages ++= List("INVALID_QUESTION_ID")
-            }
           }
-        }
       }
-      
+
       messages
     }
     case _ => List("INVALID_ID")
