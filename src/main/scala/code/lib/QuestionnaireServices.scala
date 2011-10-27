@@ -40,6 +40,15 @@ object QuestionnaireServices extends RestHelper {
       </validation>
 
     case "questionnaire" :: "put" :: _ XmlPut input -> _ =>
-      <failed/>
+      Questionnaire.validate(input).isEmpty match {
+        case true => {
+          // TODO: save answer in DB
+          <success />
+        }
+        
+        case false => {
+          <failed reason="VALIDATION_FAILED" />
+        }
+      }
   }
 }
