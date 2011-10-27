@@ -30,23 +30,23 @@
     &lt;question type="location" id="2"&gt;Where are you now?&lt;/question&gt;
     &lt;question type="choice" id="3"&gt;
         What language do you prefer?
-        &lt;choice id="cpp"&gt;C++&lt;/choice&gt;
-        &lt;choice id="java"&gt;Java&lt;/choice&gt;
-        &lt;choice id="scala"&gt;Scala&lt;/choice&gt;
+        &lt;choice id="1"&gt;C++&lt;/choice&gt;
+        &lt;choice id="2"&gt;Java&lt;/choice&gt;
+        &lt;choice id="3"&gt;Scala&lt;/choice&gt;
     &lt;/question&gt;
     &lt;question type="multichoice" id="4"&gt;
         What languages are you interested in?
-        &lt;choice id="cpp"&gt;C++&lt;/choice&gt;
-        &lt;choice id="java"&gt;Java&lt;/choice&gt;
-        &lt;choice id="scala"&gt;Scala&lt;/choice&gt;
+        &lt;choice id="4"&gt;C++&lt;/choice&gt;
+        &lt;choice id="5"&gt;Java&lt;/choice&gt;
+        &lt;choice id="6"&gt;Scala&lt;/choice&gt;
     &lt;/question&gt;
 &lt;/questionnaire&gt;</pre>
 		<hr />
 		<pre class="sh_xml">&lt;answers forQuestionnaire="1"&gt;
     &lt;answer forQuestion="1"&gt;Max Mustermann&lt;/answer&gt;
     &lt;answer forQuestion="2"&gt;51.155205,14.986033&lt;/answer&gt;
-    &lt;answer forQuestion="3"&gt;cpp&lt;/answer&gt;
-    &lt;answer forQuestion="4"&gt;cpp,scala&lt;/answer&gt;
+    &lt;answer forQuestion="3"&gt;1&lt;/answer&gt;
+    &lt;answer forQuestion="4"&gt;4,5&lt;/answer&gt;
 &lt;/answers&gt;</pre>
 
         <p>Die Antworten werden nun vom Server validiert. Anschließend sendet er eine Erfolgsmeldung:</p>
@@ -56,8 +56,19 @@
 		<p>In der Beispielumfrage wurde die Frage 3 als "choice" markiert. Enthält die Antwort nun aber mehr als eine Auswahl, 
 		so wird eine entsprechende Fehlermeldung an den Client gesendet:</p>
 		<pre class="sh_xml">&lt;validation status="failed"&gt;
-    &lt;answer forQuestion="3"&gt;TOO_MANY_SELECTIONS&lt;/answer&gt;
+    &lt;message error="INVALID_CHOICE"&gt;
+        &lt;input&gt;2,3&lt;/input&gt;
+    &lt;/message&gt;
 &lt;validation&gt;</pre>
+
+        <p>Ein weiteres Beispiel ist das Senden einer Auswahlmöglichkeit, welche gar nicht exisitert. In diesem
+        Fall könnte die Fehlermeldung wie folgt aussehen:</p>
+        <pre class="sh_xml">&lt;validation status="failed"&gt;
+    &lt;message error="INVALID_CHOICE"&gt;
+        &lt;input&gt;77&lt;/input&gt;
+        &lt;expected&gt;1,2,3&lt;/expected&gt;
+    &lt;/message&gt;
+&lt;/validation&gt;</pre>
 	</div>
 	
 </body>
