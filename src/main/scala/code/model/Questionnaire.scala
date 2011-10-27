@@ -10,7 +10,7 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
 
   def validate(input: Node) = Questionnaire.find(By(Questionnaire.id, (input \ "@forQuestionnaire").text.toLong)) match {
     case Full(questionnaire) => {
-      var messages = List[String]()
+      var messages = List[(String, String, String)]()
 
       input \ "answer" foreach {
         answerNode =>
@@ -29,33 +29,41 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
                       val lat = parts(0).toDouble
                       val lng = parts(1).toDouble
                     } catch {
-                      case _ => messages ++= List("INVALID_LOCATION")
+                      case _ => messages ++= List(("INVALID_LOCATION", answerText, ""))
                     }
                   }
 
                   case "choice" => {
-                    val choiceID = answerText.toLong
-                    question.choices.exists {
-                      choice: Choice => choice.id.is == choiceID
-                    } match {
-                      case true =>
-                      case false => messages ++= List("INVALID_CHOICE", choiceID.toString, question.choices.map (_.id.is).mkString(","))
+                    try {
+                      val choiceID = answerText.toLong
+                      question.choices.exists {
+                        choice: Choice => choice.id.is == choiceID
+                      } match {
+                        case true =>
+                        case false => messages ++= List(("INVALID_CHOICE", answerText, question.choices.map(_.id.is).mkString(",")))
+                      }
+                    } catch {
+                      case _ => messages ++= List(("INVALID_CHOICE", answerText, ""))
                     }
                   }
 
                   case "multichoice" => {
-                    val choiceIDs = answerText.split(",") map (_.toLong)
+                    try {
+                      val choiceIDs = answerText.split(",") map (_.toLong)
 
-                    choiceIDs foreach {
-                      choiceID: Long =>
-                        {
-                          question.choices.exists {
-                            choice: Choice => choice.id.is == choiceID
-                          } match {
-                            case true =>
-                            case false => messages ++= List("INVALID_CHOICE")
+                      choiceIDs foreach {
+                        choiceID: Long =>
+                          {
+                            question.choices.exists {
+                              choice: Choice => choice.id.is == choiceID
+                            } match {
+                              case true =>
+                              case false => messages ++= List(("INVALID_CHOICE", answerText, question.choices.map(_.id.is).mkString(",")))
+                            }
                           }
-                        }
+                      }
+                    } catch {
+                      case _ => messages ++= List(("INVALID_CHOICE", answerText, ""))
                     }
                   }
 
@@ -67,7 +75,7 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
                 }
               }
               case _ => {
-                messages ++= List("INVALID_QUESTION_ID")
+                messages ++= List(("INVALID_QUESTION_ID", questionID.toString, ""))
               }
             }
           }

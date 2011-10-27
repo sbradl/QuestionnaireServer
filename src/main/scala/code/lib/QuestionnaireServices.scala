@@ -24,7 +24,17 @@ object QuestionnaireServices extends RestHelper {
       <validation status={ status }>
         {
           messages map {
-            msg => <message>{msg}</message>
+            msg =>
+              msg match {
+                case (s: String, "", "") => <message error={ s } />
+                case (s: String, in: String, "") => <message error={ s }>
+                                                      <input>{ in }</input>
+                                                    </message>
+                case (s: String, in: String, e: String) => <message error={ s }>
+                                                             <input>{ in }</input>
+                                                             <expected>{ e }</expected>
+                                                           </message>
+              }
           }
         }
       </validation>
