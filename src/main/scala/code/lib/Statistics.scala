@@ -18,7 +18,7 @@ object Statistics {
 
 class Statistics(questionnaire: Questionnaire) {
 
-  private val stats = ListBuffer[(String, String, Int)]()
+  private val stats = ListBuffer[(Question, String, Int)]()
   
   def getData = stats.toList groupBy (_._1)
 
@@ -47,7 +47,7 @@ class Statistics(questionnaire: Questionnaire) {
               
               case "choice" => {
                 val choice = Choice.find(By(Choice.id, text.is.toLong)).open_!
-                stats += ((question.text, choice.text.is, answers))
+                stats += ((question, choice.text.is, answers))
               }
               
               case "multichoice" => {
@@ -56,13 +56,13 @@ class Statistics(questionnaire: Questionnaire) {
                 parts foreach {
                   part => {
                     val choice = Choice.find(By(Choice.id, part.toLong)).open_!
-                    stats += ((question.text, choice.text.is, answers))
+                    stats += ((question, choice.text.is, answers))
                   }
                 }
                 
               }
               case _ => {
-                stats += ((question.text, text, answers))
+                stats += ((question, text, answers))
               }
             }
           }

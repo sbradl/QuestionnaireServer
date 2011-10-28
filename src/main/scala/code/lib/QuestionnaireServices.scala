@@ -21,7 +21,7 @@ object QuestionnaireServices extends RestHelper {
               stats.getData map {
                 record =>
                   {
-                    <question text={ record._1 }>
+                    <question text={ record._1.text } answerType={record._1.answerType}>
                       {
                         record._2 map {
                           x => <answer votes={ x._3 toString }>{ x._2 }</answer>
