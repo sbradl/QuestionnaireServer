@@ -3,8 +3,12 @@ Start Webserver
 
 Linux
 -----
-./sbt update ~jetty-run
+./sbt update
+./sbt
+> container:start
 
 Windows
 -------
-sbt.bat update ~jetty-run
+sbt.bat update
+sbt.bat
+> container:start
