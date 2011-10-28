@@ -78,16 +78,20 @@
 			Um auf ein Element der Benutzeroberfläche zugreifen zu können, muss
 			dieses eine eindeutige ID besitzen. In der Datei <span class="tt">res/layout/main.xml</span>
 			wird diese dem <span class="tt">TextView</span>-Element mit einem
-			Attribut zugeordnet: <span class="tt">android:id="@+id/textview"</span>
-			TODO: was genau bedeutet +id?
+			Attribut zugeordnet: <span class="tt">android:id="@+id/textview"</span>.
+			In dem Attribut bedeutet <span class="tt">@+id</span>, dass der Teil
+			nach dem <span class="tt">/</span> vom XML-Parser verarbeitet werden
+			soll und das es sich um eine ID handelt. Zusätzlich wird die ID
+			als neu behandelt (durch das <span class="tt">+</span>
+			gekennzeichnet) und in die Liste der Ressourcen eingetragen.
 		</p>
 
 		<h4>Erstellung der Testklasse</h4>
 		<p>
 			Um eine neue Testklasse zu erstellen, wird per Rechtsklick auf das
 			Testpackage das Menu <span class="tt">New => Class</span> aufgerufen.
-			Als Name geben wir "HelloWorldTest" ein. Also Superklasse wird <span
-				class="tt">android.test.ActivityInstrumentationTestCase2&lt;HelloWorldActivity&gt;</span>
+			Als Name geben wir "HelloWorldTest" ein. Als Superklasse wird <span
+				class="tt">ActivityInstrumentationTestCase2&lt;HelloWorldActivity&gt;</span>
 			angegeben. Eine <span class="tt">import</span>-Anweisung für die zu
 			testenden Activity wird hierbei nicht automatisch erstellt und muss
 			somit per Hand eingegeben werden. Auch ein Konstruktor muss explizit
@@ -172,7 +176,8 @@ public class HelloWorldTest extends
     public void testText() {
         assertEquals(expectedString, (String)textView.getText());
     }
-}</pre>
+}
+		</pre>
 
 		<h4>Ausführung der Tests</h4>
 		<p>
