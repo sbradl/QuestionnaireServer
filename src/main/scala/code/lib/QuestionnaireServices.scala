@@ -14,7 +14,7 @@ object QuestionnaireServices extends RestHelper {
 
     case "questionnaire" :: "verify" :: _ XmlPut input -> _ =>
       println("Input: " + input)
-      val messages = Questionnaire.validate(input)
+      val messages = InputValidator(input)
 
       val status = messages match {
         case List() => "success"
@@ -40,9 +40,9 @@ object QuestionnaireServices extends RestHelper {
       </validation>
 
     case "questionnaire" :: "put" :: _ XmlPut input -> _ =>
-      Questionnaire.validate(input).isEmpty match {
+      InputValidator(input).isEmpty match {
         case true => {
-          // TODO: save answer in DB
+          Questionnaire.saveAnswers(input)
           <success />
         }
         

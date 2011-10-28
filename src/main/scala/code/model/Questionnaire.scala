@@ -5,152 +5,54 @@ import scala.xml.Node
 import net.liftweb.common.Empty
 import net.liftweb.common.Full
 import net.liftweb.common.Failure
+import scala.collection.mutable.ListBuffer
 
 object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnaire] {
 
-  def validate(input: Node) = Questionnaire.find(By(Questionnaire.id, (input \ "@forQuestionnaire").text.toLong)) match {
-    case Full(questionnaire) => {
-      var messages = List[(String, String, String)]()
+  def saveAnswers(input: Node) = {
+    val questionnaire = Questionnaire.find(By(Questionnaire.id, (input \ "@forQuestionnaire").text.toLong)).open_!
 
-      input \ "answer" foreach {
-        answerNode =>
-          {
-            val questionID = (answerNode \ "@forQuestion").text.toLong
-            val answerText = answerNode.text
-            val questionBox = Question.find(By(Question.id, questionID), By(Question.questionnaire, questionnaire))
-
-            questionBox match {
-              case Full(question) => {
-                question.answerType.is match {
-                  case "location" => {
-                    val parts = answerText.split(",")
-
-                    try {
-                      val lat = parts(0).toDouble
-                      val lng = parts(1).toDouble
-                    } catch {
-                      case _ => messages ++= List(("INVALID_LOCATION", answerText, ""))
-                    }
-                  }
-
-                  case "choice" => {
-                    try {
-                      val choiceID = answerText.toLong
-                      question.choices.exists {
-                        choice: Choice => choice.id.is == choiceID
-                      } match {
-                        case true =>
-                        case false => messages ++= List(("INVALID_CHOICE", answerText, question.choices.map(_.id.is).mkString(",")))
-                      }
-                    } catch {
-                      case _ => messages ++= List(("INVALID_CHOICE", answerText, ""))
-                    }
-                  }
-
-                  case "multichoice" => {
-                    try {
-                      val choiceIDs = answerText.split(",") map (_.toLong)
-
-                      choiceIDs foreach {
-                        choiceID: Long =>
-                          {
-                            question.choices.exists {
-                              choice: Choice => choice.id.is == choiceID
-                            } match {
-                              case true =>
-                              case false => messages ++= List(("INVALID_CHOICE", answerText, question.choices.map(_.id.is).mkString(",")))
-                            }
-                          }
-                      }
-                    } catch {
-                      case _ => messages ++= List(("INVALID_CHOICE", answerText, ""))
-                    }
-                  }
-
-                  case "attachment" => {
-
-                  }
-
-                  case _ =>
-                }
-              }
-              case _ => {
-                messages ++= List(("INVALID_QUESTION_ID", questionID.toString, ""))
-              }
-            }
-          }
-      }
-
-      messages
-    }
-    case _ => List("INVALID_ID")
+//    input \ "answer" foreach {
+//      node => Answer.fromXml(node).save
+//    }
   }
 
   def createDefaultQuestionnaire {
     val questionnaire = Questionnaire.create
     questionnaire.save
 
-    val q1 = Question.create
-    q1.questionnaire(questionnaire)
-    q1.answerType("text")
-    q1.text("What's your name?")
-    q1.save
+    createQuestion(questionnaire, "text", "What's your name?")
+    createQuestion(questionnaire, "location", "Where are you now?")
 
-    val q2 = Question.create
-    q2.questionnaire(questionnaire)
-    q2.answerType("location")
-    q2.text("Where are you now?")
-    q2.save
+    val q3 = createQuestion(questionnaire, "choice", "What programming language do you prefer?")
+    createChoice(q3, "C++")
+    createChoice(q3, "Scala")
+    createChoice(q3, "Java")
 
-    val q3 = Question.create
-    q3.questionnaire(questionnaire)
-    q3.answerType("choice")
-    q3.text("What programming language do you prefer?")
-    q3.save
+    val q4 = createQuestion(questionnaire, "multichoice", "What programming languages are you interested in?")
+    createChoice(q4, "C++")
+    createChoice(q4, "Scala")
+    createChoice(q4, "Java")
 
-    val c1 = Choice.create
-    c1.question(q3)
-    c1.text("C++")
-    c1.save
-
-    val c2 = Choice.create
-    c2.question(q3)
-    c2.text("Scala")
-    c2.save
-
-    val c3 = Choice.create
-    c3.question(q3)
-    c3.text("Java")
-    c3.save
-
-    val q4 = Question.create
-    q4.questionnaire(questionnaire)
-    q4.answerType("multichoice")
-    q4.text("What programming languages are you interested in?")
-    q4.save
-
-    val c4 = Choice.create
-    c4.question(q4)
-    c4.text("C++")
-    c4.save
-
-    val c5 = Choice.create
-    c5.question(q4)
-    c5.text("Scala")
-    c5.save
-
-    val c6 = Choice.create
-    c6.question(q4)
-    c6.text("Java")
-    c6.save
-
-    val q5 = Question.create
-    q5.questionnaire(questionnaire)
-    q5.answerType("attachment")
-    q5.text("Attachments")
-    q5.save
+    //createQuestion(questionnaire, "attachment", "Attachments")
   }
 
+  private def createQuestion(questionnaire: Questionnaire, answerType: String, text: String) = {
+    val q = Question.create
+    q.questionnaire(questionnaire)
+    q.answerType(answerType)
+    q.text(text)
+    q.save
+
+    q
+  }
+
+  private def createChoice(question: Question, text: String) {
+    val c = Choice.create
+    c.question(question)
+    c.text(text)
+    c.save
+  }
 }
 
 class Questionnaire extends LongKeyedMapper[Questionnaire] with IdPK with OneToMany[Long, Questionnaire] {
