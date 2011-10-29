@@ -25,24 +25,36 @@
 			ausgewählt. Im daraufhin erscheinenden Fenster findet wählt man <span
 				class="tt">Android => Android Project</span>. Mit einem Klick auf <span
 				class="tt">Next</span> gelangt man zur nächsten Seite. Hier muss ein
-			Projektname angegeben werden. Als Build Target wählen wir "Android
-			3.0". Außerdem muss der Name des Packages angegeben werden.
+			Projektname angegeben werden.
 		</p>
 		<p>
 			<img src="/images/lessons/basics/NewProject.png" />
 		</p>
+		<p>Im nächsten Schritt muss die Zielplattform angegeben werden.</p>
+		<p>
+			<img src="/images/lessons/basics/NewProject_SelectSDK.png" />
+		</p>
 
 		<p>
-			Auf der nächsten Seite wird ein Haken bei <span class="tt">Create
-				a Test Project</span> gesetzt. Nach einem Klick auf <span class="tt">Finish</span>
-			wird das Projekt erzeugt. Dieses kann nun mit <span class="tt">Run
-				=> Run As => Android Application</span> gestartet werden. Wenn das Endgerät
-			zu diesem Zeitpunkt angeschlossen ist, so wird die Anwendung direkt
-			auf das Gerät kopiert und gestartet. Sollte keine Gerät angeschlossen
-			sein, so wird folgende Meldung angezeigt:
+			Der letzte Schritt besteht aus der Angabe einiger Informationen zum
+			Projekt. Es muss der Name der Anwendung und das Java-Package
+			angegeben werden. Die Einstellung <span class="tt">Create
+				Activity</span> wird ausgewählt. Außerdem wird ein Haken bei <span
+				class="tt">Create a Test Project</span> gesetzt. Nach einem Klick
+			auf <span class="tt">Finish</span> wird das Projekt erzeugt.
 		</p>
 		<p>
-			<img src="/images/lessons/basics/NoTargetsFound.png" />
+			<img src="/images/lessons/basics/NewProject_AppInfo.png" />
+		</p>
+		<p>
+			Dieses kann nun mit <span class="tt">Run => Run As => Android
+				Application</span> gestartet werden. Wenn das Endgerät zu diesem Zeitpunkt
+			angeschlossen ist, so wird die Anwendung direkt auf das Gerät kopiert
+			und gestartet. Sollte keine Gerät angeschlossen sein, so wird
+			folgende Meldung gezeigt:
+		</p>
+		<p>
+			<img src="/images/lessons/basics/noDeviceFound.png" />
 		</p>
 
 		<p>
@@ -56,10 +68,11 @@
 		<p>
 			Der Eclipse Project Wizard erstellt automatisch die Datei <span
 				class="tt">res/values/strings.xml</span>. In dieser befinden sich
-			bereits die auszulagernden Strings. In der Datei <span class="tt">res/layout/main.xml</span>
-			kann der Zugriff innerhalb der Anwendung betrachtet werden. Will man
-			auf einen nichtvorhandenen String zugreifen, so wird bereits durch
-			die IDE ein Fehler angezeigt:
+			bereits die auszulagernden Zeichenketten. In der Datei <span
+				class="tt">res/layout/main.xml</span> kann der Zugriff auf die
+			Zeichenketten innerhalb der Anwendung betrachtet werden. Will man auf
+			einen nichtvorhandenen String zugreifen, so wird bereits durch die
+			IDE ein Fehler angezeigt:
 		</p>
 		<p>
 			<img src="/images/lessons/basics/UnknownString.png" />
@@ -81,10 +94,26 @@
 			Attribut zugeordnet: <span class="tt">android:id="@+id/textview"</span>.
 			In dem Attribut bedeutet <span class="tt">@+id</span>, dass der Teil
 			nach dem <span class="tt">/</span> vom XML-Parser verarbeitet werden
-			soll und das es sich um eine ID handelt. Zusätzlich wird die ID
-			als neu behandelt (durch das <span class="tt">+</span>
-			gekennzeichnet) und in die Liste der Ressourcen eingetragen.
+			soll und das es sich um eine ID handelt. Zusätzlich wird die ID als
+			neu behandelt (durch das <span class="tt">+</span> gekennzeichnet)
+			und in die Liste der Ressourcen eingetragen. Der Quelltext der Datei
+			<span class="tt">res/layout/main.xml</span> sollte nun etwa wie folgt
+			aussehen:
 		</p>
+		<pre class="sh_xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"&gt;
+
+    &lt;TextView
+        android:id="@+id/textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello" /&gt;
+
+&lt;/LinearLayout&gt;</pre>
+
 
 		<h4>Erstellung der Testklasse</h4>
 		<p>
@@ -123,6 +152,14 @@ public class HelloWorldTest extends ActivityInstrumentationTestCase2&lt;HelloWor
 			aufgerufen. Der Rückgabewert muss dann aber noch in ein Objekt vom
 			Typ <span class="tt">TextView</span> gecastet werden.
 		</p>
+		<pre class="sh_java">@Override
+protected void setUp() throws Exception {
+    super.setUp();
+
+    activity = getActivity();
+    textView = (TextView) activity.findViewById(de.hszigr.mobileapps.R.id.textview);
+    expectedString = activity.getString(de.hszigr.mobileapps.R.string.hello);
+}</pre>
 
 		<h4>Vorbedingungen testen</h4>
 		<p>
@@ -136,9 +173,9 @@ public class HelloWorldTest extends ActivityInstrumentationTestCase2&lt;HelloWor
 }</pre>
 
 		<h4>Test der angezeigten Zeichenkette</h4>
-		<p>Für diesen Test nutzen wir den in dem Feld expectedString
+		<p>Für diesen Test nutzen wir den in dem Feld <span class="tt">expectedString</span>
 			gespeichert Wert aus der Ressourcendatei und den Wert des
-			TextView-Objekts.</p>
+			<span class="tt">TextView</span>-Objekts.</p>
 		<pre class="sh_java">public void testText() {
     assertEquals(expectedString, (String)textView.getText());
 }</pre>
@@ -177,6 +214,11 @@ public class HelloWorldTest extends
         assertEquals(expectedString, (String)textView.getText());
     }
 }
+		
+		
+		
+		
+		
 		</pre>
 
 		<h4>Ausführung der Tests</h4>
