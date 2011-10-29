@@ -7,7 +7,60 @@
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
 		<h2>Einrichtung der Entwicklungsumgebung</h2>
-		
+		<h3>Einleitung</h3>
+		<p>Die Entwicklung von Anwendungen für die Android-Plattform
+			geschieht mit der Entwicklungsumgebung Eclipse. Für diese stellt
+			Google ein Plugin bereit, die sogennante Android Development Tools
+			(ADT). Dieses Plugin beinhaltet alles, was für den Einstieg in die
+			Entwicklung nötig ist.</p>
+
+		<h3>Einrichtung der Update-Site</h3>
+		<p>
+			Um die Update-Site für das Plugin zu installieren startet man
+			Eclipse. Anschließend wählt man den Menüpunkt <span class="tt">Help
+				=> Install New Software</span>. Daraufhin öffnet sich folgender Dialog:
+		</p>
+		<p>
+			<img style="width: 100%"
+				src="/images/lessons/basics/addUpdateSite_01.png" />
+		</p>
+		<p>
+			Nach einem Klick auf <span class="tt">Add</span> öffnet sich ein
+			weiterer Dialog, in den man die URL der Update-Site eingeben muss:
+		</p>
+		<p>
+			<img src="/images/lessons/basics/addUpdateSite_02.png" />
+		</p>
+		<p>
+			Danach wird der Dialog wieder geschlossen. Eclipse kontaktiert nun
+			automatisch die Update-Site und zeigt die zur Verfügung stehenden
+			Plugins an. Nun wird ein Haken bei <span class="tt">Developer
+				Tools</span> gesetzt und die Installation abgeschlossen.
+		</p>
+		<p>
+			<img style="width: 100%" src="/images/lessons/basics/installADT.png" />
+		</p>
+
+		<h3>Installation eines SDK</h3>
+		<p>Nach der Installation des Plugins muss Eclipse neu gestartet
+			werden. Danach wird automatisch ein Assistent zur Installation eines
+			SDK gestartet:</p>
+		<p>
+			<img src="/images/lessons/basics/sdkWizard_01.png" />
+		</p>
+		<p>Der Speicherort des SDK muss in diesem Fall angepasst werden.
+			Der Assistent ermittelt anschließend die zu installierenden Pakete
+			und zeigt eine Überischt an an:</p>
+		<p>
+			<img src="/images/lessons/basics/sdkWizard_02.png" />
+		</p>
+		<p>
+			Mit einem Klick auf <span class="tt">Install</span> wird die
+			SDK-Installation gestartet.
+		</p>
+		<p>
+			<img src="/images/lessons/basics/sdkWizard_03.png" />
+		</p>
 	</div>
 </body>
 </html>

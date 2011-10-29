@@ -44,7 +44,11 @@
 
 #main p + p {
     text-indent: 0px;
-    margin-top: 0.5em;    
+    margin-top: 0.5em;
+}
+
+.screenshot {
+	border: 1px solid #999999;
 }
 
 #main thead td {
