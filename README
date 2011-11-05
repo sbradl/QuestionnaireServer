@@ -3,12 +3,10 @@ Start Webserver
 
 Linux
 -----
-./sbt update
 ./sbt
 > container:start
 
 Windows
 -------
-sbt.bat update
 sbt.bat
 > container:start

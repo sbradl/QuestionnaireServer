@@ -10,7 +10,10 @@ import net.liftweb.common.Full
 
 object QuestionnaireServices extends RestHelper {
   serve {
-    case "questionnaire" :: "get" :: _ XmlGet _ => Questionnaire.findAll.head.markup
+    case "questionnaire" :: "get" :: AsLong(id) :: _ XmlGet _ => Questionnaire.find(By(Questionnaire.id, id)) match {
+      case Full(questionnaire) => questionnaire.markup
+      case _ => <failed reason="INVALID_ID" />
+    }
 
     case "questionnaire" :: "statistics" :: AsLong(id) :: _ XmlGet _ =>
       Questionnaire.find(By(Questionnaire.id, id)) match {
