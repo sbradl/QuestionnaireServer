@@ -26,19 +26,27 @@
 		<h>Eine beispielhafte Umfrage mit passender Antwort an den Server
 			könnte wie folgt aussehen:</p>
 		<pre class="sh_xml">&lt;questionnaire id="1"&gt;
-    &lt;question type="text" id="1"&gt;What's your name?&lt;/question&gt;
-    &lt;question type="location" id="2"&gt;Where are you now?&lt;/question&gt;
+    &lt;question type="text" id="1"&gt;
+        &lt;text&gt;What's your name?&lt;/text&gt;
+    &lt;/question&gt;
+    &lt;question type="location" id="2"&gt;
+        &lt;text&gt;Where are you now?&lt;/text&gt;
+    &lt;/question&gt;
     &lt;question type="choice" id="3"&gt;
-        What language do you prefer?
-        &lt;choice id="1"&gt;C++&lt;/choice&gt;
-        &lt;choice id="2"&gt;Java&lt;/choice&gt;
-        &lt;choice id="3"&gt;Scala&lt;/choice&gt;
+        &lt;text&gt;What language do you prefer?&lt;/text&gt;
+        &lt;choices&gt;
+	        &lt;choice id="1"&gt;C++&lt;/choice&gt;
+	        &lt;choice id="2"&gt;Java&lt;/choice&gt;
+	        &lt;choice id="3"&gt;Scala&lt;/choice&gt;
+        &lt;/choices&gt;
     &lt;/question&gt;
     &lt;question type="multichoice" id="4"&gt;
-        What languages are you interested in?
-        &lt;choice id="4"&gt;C++&lt;/choice&gt;
-        &lt;choice id="5"&gt;Java&lt;/choice&gt;
-        &lt;choice id="6"&gt;Scala&lt;/choice&gt;
+        &lt;text&gt;What languages are you interested in?&lt;/text&gt;
+        &lt;choices&gt;
+	        &lt;choice id="4"&gt;C++&lt;/choice&gt;
+	        &lt;choice id="5"&gt;Java&lt;/choice&gt;
+	        &lt;choice id="6"&gt;Scala&lt;/choice&gt;
+        &lt;/choices&gt;
     &lt;/question&gt;
 &lt;/questionnaire&gt;</pre>
 		<hr />

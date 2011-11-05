@@ -67,15 +67,19 @@ class Questionnaire extends LongKeyedMapper[Questionnaire] with IdPK with OneToM
           question: Question =>
             {
               <question id={ question.id.is.toString } type={ question.answerType.is }>
-                { question.text.is }
+                <text>{ question.text.is }</text>
                 {
                   if (!question.choices.isEmpty) {
-                    question.choices map {
-                      choice: Choice =>
-                        {
-                          <choice id={ choice.id.is.toString }>{ choice.text.is }</choice>
+                    <choices>
+                      {
+                        question.choices map {
+                          choice: Choice =>
+                            {
+                              <choice id={ choice.id.is.toString }>{ choice.text.is }</choice>
+                            }
                         }
-                    }
+                      }
+                    </choices>
                   }
                 }
               </question>
