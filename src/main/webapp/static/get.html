@@ -13,6 +13,11 @@
 			angefordert. Die Anforderung geschieht mit einem einfachen HTTP Get
 			Request.
 		</p>
+		<p>
+			Wahlweise kann auch eine Liste aller Umfragen unter der URL <span><a
+				href="http://localhost:8080/questionnaire/list.xml">http://localhost:8080/questionnaire/list.xml</a></span>
+			bezogen werden.
+		</p>
 
 		<p>Das Ergebnis der Anfrage ist ein XML-Dokument. Dieses besteht
 			aus dem Wurzelelement "questionnaire". Um verschiedene Umfragen
@@ -41,22 +46,24 @@
 					<td>Einfaches Textfeld, automatische Eingabe mittels GPS</td>
 				</tr>
 				<tr>
-				    <td>attachment</td>
-				    <td>An dieser Stelle können zusätzliche Dateien an die Umfrage angehängt werden</td>
-				    <td>FileUpload</td>
+					<td>attachment</td>
+					<td>An dieser Stelle können zusätzliche Dateien an die Umfrage
+						angehängt werden</td>
+					<td>FileUpload</td>
 				</tr>
 				<tr>
-				    <td>choice</td>
-				    <td>Tritt eine Frage mit diesem Typ auf, so besitzt das entsprechende XML-Element
-				    zwei oder mehrere vorgegebene Antwortmöglichkeiten. Aus diesen Möglichkeiten muss
-				    eine ausgewählt werden.</td>
-				    <td>Radio-Button oder Combobox</td>
+					<td>choice</td>
+					<td>Tritt eine Frage mit diesem Typ auf, so besitzt das
+						entsprechende XML-Element zwei oder mehrere vorgegebene
+						Antwortmöglichkeiten. Aus diesen Möglichkeiten muss eine
+						ausgewählt werden.</td>
+					<td>Radio-Button oder Combobox</td>
 				</tr>
 				<tr>
-				    <td>multichoice</td>
-				    <td>Dieser Typ ist ähnlich wie "choice", es können jedoch mehrere
-				    Antwortmöglichkeiten ausgewähl werden.</td>
-				    <td>Checkbox</td>
+					<td>multichoice</td>
+					<td>Dieser Typ ist ähnlich wie "choice", es können jedoch
+						mehrere Antwortmöglichkeiten ausgewähl werden.</td>
+					<td>Checkbox</td>
 				</tr>
 			</tbody>
 		</table>

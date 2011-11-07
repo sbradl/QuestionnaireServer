@@ -10,9 +10,18 @@ import net.liftweb.common.Full
 
 object QuestionnaireServices extends RestHelper {
   serve {
+    case "questionnaire" :: "list" :: _ XmlGet _ =>
+      <questionnaires>
+        {
+            Questionnaire.findAll map {
+              questionnaire => <questionnaire id={questionnaire.id.toString} />
+            }
+        }
+      </questionnaires>
+
     case "questionnaire" :: "get" :: AsLong(id) :: _ XmlGet _ => Questionnaire.find(By(Questionnaire.id, id)) match {
       case Full(questionnaire) => questionnaire.markup
-      case _ => <failed reason="INVALID_ID" />
+      case _ => <failed reason="INVALID_ID"/>
     }
 
     case "questionnaire" :: "statistics" :: AsLong(id) :: _ XmlGet _ =>
@@ -24,7 +33,7 @@ object QuestionnaireServices extends RestHelper {
               stats.getData map {
                 record =>
                   {
-                    <question text={ record._1.text } answerType={record._1.answerType}>
+                    <question text={ record._1.text } answerType={ record._1.answerType }>
                       {
                         record._2 map {
                           x => <answer votes={ x._3 toString }>{ x._2 }</answer>
@@ -36,7 +45,7 @@ object QuestionnaireServices extends RestHelper {
             }
           </statistics>
         }
-        case _ => <failed reason="INVALID_ID" />
+        case _ => <failed reason="INVALID_ID"/>
       }
 
     case "questionnaire" :: "verify" :: _ XmlPut input -> _ =>
