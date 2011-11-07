@@ -19,6 +19,7 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
 
   def createDefaultQuestionnaire {
     val questionnaire = Questionnaire.create
+    questionnaire.title("Sample questionnaire")
     questionnaire.save
 
     createQuestion(questionnaire, "text", "What's your name?")
@@ -57,11 +58,13 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
 
 class Questionnaire extends LongKeyedMapper[Questionnaire] with IdPK with OneToMany[Long, Questionnaire] {
   def getSingleton = Questionnaire
+  
+  object title extends MappedText(this)
 
   object questions extends MappedOneToMany(Question, Question.questionnaire)
 
   def markup =
-    <questionnaire id={ id.is.toString }>
+    <questionnaire id={ id.is.toString } title={title.is}>
       {
         questions map {
           question: Question =>

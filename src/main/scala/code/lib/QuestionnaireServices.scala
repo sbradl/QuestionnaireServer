@@ -14,7 +14,7 @@ object QuestionnaireServices extends RestHelper {
       <questionnaires>
         {
             Questionnaire.findAll map {
-              questionnaire => <questionnaire id={questionnaire.id.toString} />
+              questionnaire => <questionnaire id={questionnaire.id.toString} title={questionnaire.title} />
             }
         }
       </questionnaires>
