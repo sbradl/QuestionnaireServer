@@ -49,7 +49,6 @@ object QuestionnaireServices extends RestHelper {
       }
 
     case "questionnaire" :: "verify" :: _ XmlPut input -> _ =>
-      println("Input: " + input)
       val messages = InputValidator(input)
 
       val status = messages match {

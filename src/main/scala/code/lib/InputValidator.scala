@@ -81,7 +81,7 @@ class InputValidator {
 
   private def validateSingleChoice {
     try {
-      if (!currentAnswer.trim().isEmpty() && currentQuestion.isRequired.is) {
+      if (currentQuestion.isRequired.is) {
         validateChoice(currentAnswer.toLong)
       }
     } catch {
@@ -91,7 +91,7 @@ class InputValidator {
 
   private def validateMultiChoice {
     try {
-      if (!currentAnswer.trim().isEmpty() && currentQuestion.isRequired.is) {
+      if (currentQuestion.isRequired.is) {
         val choiceIDs = currentAnswer.split(",") map (_.toLong)
 
         choiceIDs foreach {
