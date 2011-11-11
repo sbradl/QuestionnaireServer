@@ -6,7 +6,73 @@
 </head>
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
-		<h2>consume</h2>
+		<h2>Aufruf eines Webservice</h2>
+		<h3>Einleitung</h3>
+		<p>
+			Für die Nutzung von Webservices bietet Android das Paket <span
+				class="tt">org.apache.http</span>. In diesem ist unter anderem das
+			Paket <span class="tt">org.apache.http.client.methods</span>. Darin
+			befindet sich die Klasse <span class="tt">HttpGet</span>. Wie deren
+			Name bereits vermuten lässt, kann damit ein HTTP Get Request gesendet
+			werden. Dazu instanziiert man ein Objekt dieser Klasse und übergibt
+			als Parameter die URL des Webservice. Der folgende Abschnitt zeigt
+			den Aufruf eines Google-Webservice mittels dieser Methode.
+		</p>
+
+		<h3>Einfache Google-Maps Anfrage</h3>
+		<p>
+			Für dieses Beispiel wird der Geocoding-Service von Google genutzt.
+			Eine Beschreibung des Service kann unter <a
+				href="http://code.google.com/intl/de/apis/maps/documentation/geocoding/">http://code.google.com/intl/de/apis/maps/documentation/geocoding/</a>
+			gefunden werden. Der Abschnit <a
+				href="http://code.google.com/intl/de/apis/maps/documentation/geocoding/#GeocodingRequests">Geocodierungsanforderungen</a>
+			erklärt das Format, welches die URL für die Anforderung haben muss.
+			Bevor es an die eigentliche Arbeit mit Webservices geht, erstellen
+			wir eine kleine GUI. Diese soll ein Eingabefeld für die zu suchende Adresse, einen Button zum Senden der Anfrage sowie
+			ein Ausgabefeld für die ermittelten Koordinaten besitzen. Die Benutzerschnittstelle könnte wie folgt aussehen:
+		</p>
+		<p>
+		  <img src="/images/lessons/ws/GMQuery_Layout.png" />
+		</p>
+		<p>
+		  Die zu diesem Layout gehörige XML-Datei enthält folgenden Inhalt:
+		</p>
+		<pre class="sh_xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" &gt;
+
+    &lt;LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" &gt;
+
+        &lt;EditText
+            android:id="@+id/editTextAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.74"
+            android:hint="@string/ADDRESS_HINT" &gt;
+
+            &lt;requestFocus /&gt;
+        &lt;/EditText&gt;
+
+        &lt;Button
+            android:id="@+id/buttonGo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/GO" /&gt;
+    &lt;/LinearLayout&gt;
+
+    &lt;EditText
+        android:id="@+id/editTextResponse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.41"
+        android:inputType="textPostalAddress" /&gt;
+
+&lt;/LinearLayout&gt;</pre>
 	</div>
 </body>
 </html>
