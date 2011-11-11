@@ -44,6 +44,7 @@ class InputValidator {
         currentQuestion = question
 
         question.answerType.is match {
+          case "text" => validateText
           case "location" => validateLocation
           case "choice" => validateSingleChoice
           case "multichoice" => validateMultiChoice
@@ -57,20 +58,32 @@ class InputValidator {
     }
   }
 
-  private def validateLocation {
-    val parts = currentAnswer.split(",")
+  private def validateText {
+    if (currentQuestion.isRequired.is) {
+      if (currentAnswer.trim().isEmpty()) {
+        messages += (("INVALID_TEXT", currentAnswer, ""))
+      }
+    }
+  }
 
-    try {
-      val lat = parts(0).toDouble
-      val lng = parts(1).toDouble
-    } catch {
-      case _ => messages += (("INVALID_LOCATION", currentAnswer, ""))
+  private def validateLocation {
+    if (currentQuestion.isRequired.is) {
+      val parts = currentAnswer.split(",")
+
+      try {
+        val lat = parts(0).toDouble
+        val lng = parts(1).toDouble
+      } catch {
+        case _ => messages += (("INVALID_LOCATION", currentAnswer, ""))
+      }
     }
   }
 
   private def validateSingleChoice {
     try {
-      validateChoice(currentAnswer.toLong)
+      if (!currentAnswer.trim().isEmpty() && currentQuestion.isRequired.is) {
+        validateChoice(currentAnswer.toLong)
+      }
     } catch {
       case _ => messages += (("INVALID_CHOICE", currentAnswer, ""))
     }
@@ -78,10 +91,12 @@ class InputValidator {
 
   private def validateMultiChoice {
     try {
-      val choiceIDs = currentAnswer.split(",") map (_.toLong)
+      if (!currentAnswer.trim().isEmpty() && currentQuestion.isRequired.is) {
+        val choiceIDs = currentAnswer.split(",") map (_.toLong)
 
-      choiceIDs foreach {
-        choiceID: Long => validateChoice(choiceID)
+        choiceIDs foreach {
+          choiceID: Long => validateChoice(choiceID)
+        }
       }
     } catch {
       case _ => messages += (("INVALID_CHOICE", currentAnswer, ""))

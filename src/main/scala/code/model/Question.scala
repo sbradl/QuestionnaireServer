@@ -15,6 +15,10 @@ class Question extends LongKeyedMapper[Question] with IdPK with OneToMany[Long, 
   
   object answerType extends MappedString(this, 16)
   
+  object isRequired extends MappedBoolean(this) {
+    override def defaultValue = true
+  }
+  
   object text extends MappedText(this)
   
   object choices extends MappedOneToMany(Choice, Choice.question)
