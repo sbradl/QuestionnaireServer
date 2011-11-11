@@ -28,15 +28,16 @@
 				href="http://code.google.com/intl/de/apis/maps/documentation/geocoding/#GeocodingRequests">Geocodierungsanforderungen</a>
 			erklärt das Format, welches die URL für die Anforderung haben muss.
 			Bevor es an die eigentliche Arbeit mit Webservices geht, erstellen
-			wir eine kleine GUI. Diese soll ein Eingabefeld für die zu suchende Adresse, einen Button zum Senden der Anfrage sowie
-			ein Ausgabefeld für die ermittelten Koordinaten besitzen. Die Benutzerschnittstelle könnte wie folgt aussehen:
+			wir eine kleine GUI. Diese soll ein Eingabefeld für die zu suchende
+			Adresse, einen Button zum Senden der Anfrage sowie ein Ausgabefeld
+			für die ermittelten Koordinaten besitzen. Die Benutzerschnittstelle
+			könnte wie folgt aussehen:
 		</p>
 		<p>
-		  <img src="/images/lessons/ws/GMQuery_Layout.png" />
+			<img src="/images/lessons/ws/GMQuery_Layout.png" />
 		</p>
-		<p>
-		  Die zu diesem Layout gehörige XML-Datei enthält folgenden Inhalt:
-		</p>
+		<p>Die zu diesem Layout gehörige XML-Datei enthält folgenden
+			Inhalt:</p>
 		<pre class="sh_xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -65,14 +66,200 @@
             android:text="@string/GO" /&gt;
     &lt;/LinearLayout&gt;
 
-    &lt;EditText
-        android:id="@+id/editTextResponse"
+    &lt;TextView
+        android:id="@+id/textViewResponse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.41"
-        android:inputType="textPostalAddress" /&gt;
+        android:layout_weight="0.41" /&gt;
 
 &lt;/LinearLayout&gt;</pre>
+
+		<p>
+			In der Activity muss nun die Methode <span class="tt">onCreate</span>
+			angepasst werden. Zuerst benötigen wir eine Referenz auf den Button,
+			damit wir einen <span class="tt">OnClickListener</span> mit ihm
+			verbinden können:
+		</p>
+
+		<pre class="sh_java">
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+        
+    Button go = (Button) findViewById(R.id.buttonGo);
+        
+    go.setOnClickListener(new OnClickListener() {
+         
+        @Override
+        public void onClick(View v) {
+        }
+    });
+}</pre>
+
+		<p>
+			Nun kann die Methode <span class="tt">onClick</span> des Listeners
+			implementiert werden. Diese muss eine URL für die Anfrage generieren.
+			Dazu wird der Inhalt des Eingabefeldes benötigt. Mit der erzeugten
+			URL kann nun das <span class="tt">HttpGet</span>-Objekt erzeugt
+			werden. Um den Http GET Request auszuführen, muss noch ein Objekt der
+			Klasse <span class="tt">HttpClient</span> erstellt werden. Bis zu
+			diesem Punkt sollte der Code in etwa wie folgt aussehen:
+		</p>
+
+		<pre class="sh_java">
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+
+    Button go = (Button) findViewById(R.id.buttonGo);
+    final EditText input = (EditText) findViewById(R.id.editTextAddress);
+
+    go.setOnClickListener(new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            String address = input.getText().toString();
+
+            String PROTOCOL = "http";
+            String HOST = "maps.google.com";
+            String PATH = "/maps/api/geocode/";
+            String OUTPUT = "xml";
+            String PARAMETERS = "?sensor=false&address=";
+            String url = PROTOCOL + "://" + HOST + PATH + OUTPUT + PARAMETERS;
+
+            HttpClient client = new DefaultHttpClient();
+
+            try {
+                
+                HttpGet request = new HttpGet(url + URLEncoder.encode(address, "UTF-8"));
+                HttpResponse response = client.execute(request);
+                
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    });
+}</pre>
+
+		<p style="font-weight: bold">
+			<span style="color: #ff0000">Wichtig</span>: Der Wert des
+			Adress-Parameters muss kodiert werden, da die URL sonst sehr
+			wahrscheinlich ungültige Zeichen enthält.
+		</p>
+
+		<p>
+			Wenn man die Anwendung nun startet und versucht, eine Abfrage zu
+			senden, so wird eine <span class="tt">IOException</span> geworfen.
+			Diese hat ihren Ursprung in den Berechtigungen. Eine Anwendung muss
+			explizit angeben, dass sie Zugriff auf das Internet benötigt. Diese
+			Einstellung nimmt man in der Datei <span class="tt">AndroidManifest.xml</span>
+			vor. Dort erstellt man innerhalb des <span class="tt">manifest</span>-Elementes
+			folgendes Kindelement:
+		</p>
+
+		<pre>&lt;uses-permission android:name="android.permission.INTERNET"&gt;&lt;/uses-permission&gt;</pre>
+
+		<p>Damit erlaubt man der Anwendung, das Internet zu nutzen. Ein
+			erneuter Versuch einer Anfrage sollte nun erfolgreich sein.</p>
+
+		<p>
+			Die Daten, welche der Webservice zurück sendet befinden sich in einem
+			Objekt vom Typ <span class="tt">Entity</span>. Dieses erhält man
+			mittels <span class="tt">response.getEntity()</span>. Die
+			Helferklasse <span class="tt">EntityUtils</span> kann den Inhalt des
+			<span class="tt">Entity</span>-Objekts extrahieren und als String
+			zurückliefern. Dieser String kann nun in unserem Ausgabefeld
+			angezeigt werden.
+		</p>
+
+		<pre class="sh_java">
+@Override
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.main);
+	
+	Button go = (Button) findViewById(R.id.buttonGo);
+	final EditText input = (EditText) findViewById(R.id.editTextAddress);
+	final TextView responseText = (TextView) findViewById(R.id.textViewResponse);
+	
+	...
+}</pre>
+
+		<pre class="sh_java">
+HttpEntity entity = response.getEntity();
+String data = EntityUtils.toString(entity);
+responseText.setText(data);
+</pre>
+
+		<h3>Anpassung der Ausgabe</h3>
+		<p>
+			Bisher wird einfach der vom Webservice gelieferte XML-Code angezeigt.
+			Aus diesem werden wir nun mittels XPath den Längen- und Breitengrad
+			herausfiltern und für die Anzeige verwenden. Dafür nutzen wir die
+			Klassen <span class="tt">org.xml.sax.InputSource</span>, <span
+				class="tt">javax.xml.xpath.XPath</span> und einige weitere. Die
+			Antwort des Webservice entählt einen Status. Bevor die Positionsdaten
+			extrahiert werden können, sollte dieser überprüft werden:
+		</p>
+
+		<pre class="sh_java">
+@Override
+public void onClick(View v) {
+    String address = input.getText().toString();
+
+    String PROTOCOL = "http";
+    String HOST = "maps.google.com";
+    String PATH = "/maps/api/geocode/";
+    String OUTPUT = "xml";
+    String PARAMETERS = "?sensor=false&address=";
+    String url = PROTOCOL + "://" + HOST + PATH + OUTPUT + PARAMETERS;
+
+    HttpClient client = new DefaultHttpClient();
+
+    try {
+        
+        HttpGet request = new HttpGet(url + URLEncoder.encode(address, "UTF-8"));
+        HttpResponse response = client.execute(request);
+        HttpEntity entity = response.getEntity();
+        String data = EntityUtils.toString(entity);
+        
+        InputSource source = new InputSource(new StringReader(data));
+                    
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(source);
+        
+        XPath xpath = XPathFactory.newInstance().newXPath();
+
+        String status = (String) xpath.evaluate("//status/text()", doc, XPathConstants.STRING);
+
+        if (!status.equals("OK")) {
+            responseText.setText(status);
+            return;
+        }
+        
+    } catch (Exception e) {
+        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+}</pre>
+
+		<p>
+			Die Positionsdaten befinden sich im Element <span class="tt">result/geometry/location</span>.
+			Diese werden nun mittels XPath ermittelt und im Textfeld ausgegeben.
+		</p>
+		
+		<pre class="sh_java">
+String lat = (String) xpath.evaluate("//geometry/location/lat/text()", doc,
+        XPathConstants.STRING);
+
+String lng = (String) xpath.evaluate("//geometry/location/lng/text()", doc,
+        XPathConstants.STRING);
+
+responseText.setText(String.format("Latitude: %s\nLongitude: %s", lat, lng));</pre>
+
 	</div>
 </body>
 </html>
