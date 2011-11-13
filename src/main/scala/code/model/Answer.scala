@@ -6,8 +6,9 @@ import scala.xml.Node
 
 object Answer extends Answer with LongKeyedMetaMapper[Answer] {
 
-  def fromXml(node: Node, questionnaire: Questionnaire) = {
+  def fromXml(node: Node, questionnaire: Questionnaire, participation: Participation) = {
     val answer = Answer.create
+    answer.participation(participation)
 
     val question = Question.find(By(Question.id, (node \ "@forQuestion").text.toLong),
       By(Question.questionnaire, questionnaire)).open_!
@@ -26,6 +27,8 @@ class Answer extends LongKeyedMapper[Answer] with IdPK {
   object question extends MappedLongForeignKey(this, Question) {
     override def validSelectValues = Full(Question.findAll map (question => (question.id.is, question.text.is)))
   }
+  
+  object participation extends MappedLongForeignKey(this, Participation)
 
   object text extends MappedText(this)
 }

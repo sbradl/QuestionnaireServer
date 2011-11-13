@@ -12,8 +12,11 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
   def saveAnswers(input: Node) = {
     val questionnaire = Questionnaire.find(By(Questionnaire.id, (input \ "@forQuestionnaire").text.toLong)).open_!
 
+    val participation = Participation.create
+    participation.save
+    
     input \ "answer" foreach {
-      node => Answer.fromXml(node, questionnaire).save
+      node => Answer.fromXml(node, questionnaire, participation).save
     }
   }
 
