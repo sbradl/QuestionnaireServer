@@ -24,7 +24,7 @@ class InputValidator {
       validate(input, questionnaire)
       messages toList
     }
-    case _ => List(("INVALID_ID", "", ""))
+    case _ => List(("INVALID_ID", (input \ "@forQuestionnaire").text, ""))
   }
 
   private def validate(input: Node, questionnaire: Questionnaire) {

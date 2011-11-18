@@ -61,10 +61,6 @@ object QuestionnaireServices extends RestHelper {
           messages map {
             msg =>
               msg match {
-                case (s: String, "", "") => <message error={ s }/>
-                case (s: String, in: String, "") => <message error={ s }>
-                                                      <input>{ in }</input>
-                                                    </message>
                 case (s: String, in: String, e: String) => <message error={ s }>
                                                              <input>{ in }</input>
                                                              <expected>{ e }</expected>
