@@ -6,7 +6,69 @@
 </head>
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
-		<h2>put</h2>
+		<h2>Daten an einen Webservice senden</h2>
+		<h3>Einleitung</h3>
+		<p>Für dieses Tutorial wird der Umfrageserver genutzt. Da noch
+			keine konkreten Umfrageergebnisse vorliegen, welche an den Server
+			gesendet werden können, wird einfach ein Stück XML-Code gesendet. Der
+			Server wird dann mit einer entsprechenden Fehlermeldung in Form eines
+			XML-Dokumentes antworten.</p>
+
+		<h3>Benutzeroberfläche</h3>
+		<p>
+			Die Benutzeroberfläche kann aus dem vorherigen Tutorial übernommen
+			werden. Dadurch muss lediglich die Methode <span class="tt">onClick</span>
+			des Listeners für den Button geändert werden und das Texteingabefeld
+			wird entfernt.
+		</p>
+
+		<h3>Service ansprechen</h3>
+		<p>
+			Die <span class="tt">onClick</span>-Methode wird wie folgt
+			implementiert:
+		</p>
+		<pre class="sh_java">public void onClick(View v) {
+	HttpClient client = new DefaultHttpClient();
+	
+	try {
+	    HttpPut request = new HttpPut("http://localhost:8080/questionnaire/put.xml");
+	    
+	    String data = "&lt;test /&gt;";
+	
+	    StringEntity stringEntity = new StringEntity(data, "UTF-8");
+	    stringEntity.setContentType("text/xml");
+	
+	    request.setEntity(stringEntity);
+	
+	    HttpResponse response = client.execute(request);
+	    HttpEntity entity = response.getEntity();
+	
+	    responseText.setText(EntityUtils.toString(entity));
+	
+	} catch (Exception e) {
+	    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG)
+	            .show();
+	}
+}</pre>
+	
+	<p>
+		Zuerst wird wieder ein <span class="tt">HttpClient</span>-Objekt und anschließend
+		ein <span class="tt">HttpPut</span>-Request erstellt. Der Request erhält die URL des
+		Webservice als Parameter.
+	</p>
+	<p>
+		Nun müssen die Daten, welche gesendet werden sollen, in ein Objekt vom Typ 
+		<span class="tt">StringEntity</span> gepackt werden. Dies ist nötig, um den Content-Type
+		der Daten anzugeben. Der Content-Type entscheidet mit darüber, welcher Service genau genutzt
+		wird. Es ist zum Beispiel möglich, mehrere Services unter der selben URL zu betreiben, diese
+		jedoch an Hand des Content-Types der eingehenende Daten zu unterscheiden. Der Umfrageserver erwartet
+		XML-Daten als Eingabe. Wird der Content-Type nicht angegeben, so erhält man die Fehlermeldung,
+		dass die Seite nicht gefunden wurde (HTTP 404).
+	</p>
+	<p>
+		Das <span class="tt">StringEntity</span>-Objekt wird nun mit dem Request-Objekt verbunden.
+		Anschließend kann der Request ausgeführt und das Ergebnis ausgegeben werden.
+	</p>
 	</div>
 </body>
 </html>

@@ -260,6 +260,103 @@ String lng = (String) xpath.evaluate("//geometry/location/lng/text()", doc,
 
 responseText.setText(String.format("Latitude: %s\nLongitude: %s", lat, lng));</pre>
 
+		<p>Der gesamte Quelltext der Activity sollte nun in etwa wie folgt aussehen:</p>
+		<pre class="sh_java">package de.hszigr.mobileapps;
+
+import java.io.StringReader;
+import java.net.URLEncoder;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class GMQueryActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+
+        Button go = (Button) findViewById(R.id.buttonGo);
+        final EditText input = (EditText) findViewById(R.id.editTextAddress);
+        final TextView responseText = (TextView) findViewById(R.id.textViewResponse);
+
+        go.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String address = input.getText().toString();
+
+                String PROTOCOL = "http";
+                String HOST = "maps.google.com";
+                String PATH = "/maps/api/geocode/";
+                String OUTPUT = "xml";
+                String PARAMETERS = "?sensor=false&address=";
+                String url = PROTOCOL + "://" + HOST + PATH + OUTPUT + PARAMETERS;
+
+                HttpClient client = new DefaultHttpClient();
+
+                try {
+
+                    HttpGet request = new HttpGet(url + URLEncoder.encode(address, "UTF-8"));
+                    HttpResponse response = client.execute(request);
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+
+                    InputSource source = new InputSource(new StringReader(data));
+
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+                    Document doc = builder.parse(source);
+
+                    XPath xpath = XPathFactory.newInstance().newXPath();
+
+                    String status = (String) xpath.evaluate("//status/text()", doc,
+                            XPathConstants.STRING);
+
+                    if (!status.equals("OK")) {
+                        responseText.setText(status);
+                        return;
+                    }
+
+                    String lat = (String) xpath.evaluate("//geometry/location/lat/text()", doc,
+                            XPathConstants.STRING);
+                    
+                    String lng = (String) xpath.evaluate("//geometry/location/lng/text()", doc,
+                            XPathConstants.STRING);
+                    
+                    responseText.setText(String.format("Latitude: %s\nLongitude: %s", lat, lng));
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG)
+                            .show();
+                }
+
+            }
+        });
+    }
+}</pre>
+
 	</div>
 </body>
 </html>
