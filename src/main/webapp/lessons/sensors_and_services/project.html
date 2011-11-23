@@ -5,11 +5,43 @@
 <title>Home</title>
 </head>
 <body class="lift:content_id=main">
-    <div id="main" class="lift:surround?with=default;at=content">
-        <h2>Projektaufgabe</h2>
-        <p>
-            ...
+	<div id="main" class="lift:surround?with=default;at=content">
+		<h2>Projektaufgabe</h2>
+		<p>Die Projektaufgabe für diesen Teil besteht aus mehreren
+			Teilaufgaben</p>
+
+		<h3>Geolocation</h3>
+		<p>Frage des Umfrageservers können als Typ "location" besitzen.
+			Bei diesen Fragen soll die entsprechende Android API genutzt werden,
+			um automatisch die aktuelle Position zu bestimmen, sodass der Nutzer
+			diese Eingabe nicht mehr per Hand durchführen muss.</p>
+			
+		<h3>Kamera einbinden</h3>
+		<p>
+			Für Fragen des Typs "attachment" soll es dem Nutzer ermöglicht werden, ein mit der Kamera
+			aufgenommenes Bild an die Umfrage anzufügen. Der Nutzer soll die Möglichkeit haben auf dem
+			Gerät gespeichertes Bild auszuwählen oder ein neues aufzunehmen.
+		</p>
+		<p style="font-weight: bold">
+            <span style="color: #ff0000">Wichtig</span>: XML unterstützt nur Base64-kodierte Daten.
+            Daher muss das Bild vorher umgewandelt werden.
         </p>
-    </div>
+			
+		<h3>Speicherung von Einstellungen</h3>
+		<p>
+			Die Adresse des Umfrageservers soll einstellbar sein. Dazu muss eine entsprechende 
+			Eingabemöglichkeit bereitstehen, sowie die Möglichkeit der Speicherung der Einstellung.
+			Bei Bedarf können auch weitere Einstellungen aufgenommen werden.
+		</p>
+		
+		<h3>Onlinestatus berücksichtigen</h3>
+		<p>
+			Bevor Umfragedaten endgültig abgesendet wird, muss überprüft werden, ob eine Internetverbindung
+			besteht. Sollte dies der Fall sein, können die Umfragedaten gesendet werden. Ist das aber nicht
+			der Fall, sollen die Umfragedaten gespeichert und ein Hintergrund-Service gestartet werden. 
+			Dieser Service soll den Verbindungsstatus überwachen. Sobald wieder eine Verbindung besteht, 
+			sollen die gespeicherten Daten an den Umfrageserver übermittelt werden.
+		</p>
+	</div>
 </body>
 </html>
