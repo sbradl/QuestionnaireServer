@@ -68,10 +68,7 @@ class Boot {
           Menu.i("GEOLOCATION") / "lessons" / "sensors_and_services" / "geolocation",
           Menu.i("CAMERA") / "lessons" / "sensors_and_services" / "camera",
           Menu.i("PROJECT_SENSORS_AND_SERVICES")/ "lessons" / "sensors_and_services" / "project"),
-        Menu.i("VISUALIZATION") / "lessons" / "visualization" / "index" submenus (
-          Menu.i("TABLES") / "lessons" / "visualization" / "tables",
-          Menu.i("DIAGRAMS") / "lessons" / "visualization" / "diagrams",
-          Menu.i("PROJECT_STATISTICS") / "lessons" / "visualization" / "project")
+        Menu.i("VISUALIZATION") / "lessons" / "visualization" / "index"
         ))
 
     def sitemapMutators = User.sitemapMutator
