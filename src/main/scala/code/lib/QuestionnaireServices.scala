@@ -13,9 +13,9 @@ object QuestionnaireServices extends RestHelper {
     case "questionnaire" :: "list" :: _ XmlGet _ =>
       <questionnaires>
         {
-            Questionnaire.findAll map {
-              questionnaire => <questionnaire id={questionnaire.id.toString} title={questionnaire.title} />
-            }
+          Questionnaire.findAll map {
+            questionnaire => <questionnaire id={ questionnaire.id.toString } title={ questionnaire.title }/>
+          }
         }
       </questionnaires>
 
@@ -71,19 +71,23 @@ object QuestionnaireServices extends RestHelper {
       </validation>
 
     case "questionnaire" :: "put" :: _ XmlPut input -> _ =>
-      InputValidator(input).isEmpty match {
-        case true => {
-          try {
-            Questionnaire.saveAnswers(input)
-            <success/>
-          } catch {
-            case _ => <failed reason="SAVE_FAILED"/>
+      try {
+        InputValidator(input).isEmpty match {
+          case true => {
+            try {
+              Questionnaire.saveAnswers(input)
+              <success/>
+            } catch {
+              case _ => <failed reason="SAVE_FAILED"/>
+            }
+          }
+
+          case false => {
+            <failed reason="VALIDATION_FAILED"/>
           }
         }
-
-        case false => {
-          <failed reason="VALIDATION_FAILED"/>
-        }
+      } catch {
+        case _ => <failed reason="VALIDATION_FAILED"/>
       }
   }
 }
