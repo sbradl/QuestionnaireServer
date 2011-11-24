@@ -7,6 +7,74 @@
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
 		<h2>Geolocation</h2>
+		<p>
+			Geolocation erlaubt es, die akutelle Position des Benutzers zu
+			ermitteln. Dafür kann das Endgerät verschiedene Datenqullen wie GPS,
+			WiFi oder das Mobilfunknetz nutzen. Um an Positionsdaten zu gelangen,
+			muss ein <span class="tt">LocationListener</span> erzeugt werden.
+			Dieser enthält Callback-Methoden, welche vom System aufgrufen werden,
+			falls sich die Positionsdaten geändert haben.
+		</p>
+		<p>Zum Testen dieses Vorgehens wird zuerst ein neues Projekt mit
+			einer Activity angelegt. Diese besteht lediglich aus einer
+			Textausgabe. In dieser werden später die Positionsdaten angezeigt.</p>
+		<p>
+			Der angesprochene <span class="tt">LocationListener</span> muss beim
+			<span class="tt">LocationManager</span> registriert werden. Der <span
+				class="tt">LocationManager</span> ist eine System-Service. Man
+			erhält ihn durch einen Aufruf der Methode <span class="tt">getSystemService(LOCATION_SERVICE)</span>.
+			Der Service besitzt die Methode <span class="tt">requestLocationUpdates()</span>.
+			Mit dieser kann der zu nutzende Location-Provider (Netzwerk, GPS,
+			...) sowie der <span class="tt">LocationListener</span> gesetzt
+			werden.
+		</p>
+		<pre class="sh_java">package de.hszg.mobileapps;
+
+import android.app.Activity;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class GeolocationTestActivity extends Activity {
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        
+        final TextView textView = (TextView) findViewById(R.id.textView);
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                textView.setText(location.toString());
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) { 
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) { 
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
+                locationListener);
+    }
+}</pre>
+		<p>Vor dem Testen muss auf dem Gerät GPS oder WLAN aktiviert werden und in
+			der Manifest Datei muss der Anwendung der Zugriff auf den Location-Service
+			erlaubt werden:</p>
+		<pre class="sh_xml">&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;</pre>
 	</div>
 </body>
 </html>
