@@ -8,20 +8,174 @@
 	<div id="main" class="lift:surround?with=default;at=content">
 		<h2>Datenspeicherung</h2>
 		<h3>Einleitung</h3>
-		<p>
-			Die Android-Plattform bietet mehrere Möglichkeiten der Datenspeicherung an. Je nach 
-			Anwendungsfall kann eine geeignete Variante gewählt werden.
-		</p>
-		
+		<p>Die Android-Plattform bietet mehrere Möglichkeiten der
+			Datenspeicherung an. Je nach Anwendungsfall kann eine geeignete
+			Variante gewählt werden.</p>
+
 		<h3>Shared Preferences</h3>
-		<p></p>
-		
+		<p>Diese Art der Speicherung eignet sich sehr gut für einfache
+			Anwendungen, wie das Speichern von Einstellungen. Es handelt sich um
+			einen Key-Value-Store, in den Werte anhand eines Namens eingetragen
+			und wieder ausgelesen werden können. Nur die eigene Anwendung hat
+			Zugriff auf diese Daten.</p>
+		<p>Um Shared Preferences zu testen, wird zuerst ein neues Projekt
+			angelegt und eine Activity erstellt. Die Benutzeroberfläche soll ein
+			einfaches Texteingabefeld enthalten und einen Button. Beim Start der
+			Activity soll ein gespeicherter Wert in das Textfeld geschrieben
+			werden. Diesen kann der Nutzer ändern und durch einen Klick auf den
+			Button soll der neue Wert gespeichert werden. Dieser sollte dann beim
+			nächsten Start der Activity angezeigt werden.</p>
+		<p>
+			Um Werte auszulesen, gibt es die Methoden <span class="tt">getPreferences()</span>
+			und <span class="tt">getSharedPreferences()</span>. Der Unterschied
+			besteht darin, dass bei der zweiten Methode ein Name angegeben werden
+			kann. Dies wird benötigt, wenn mehrere Einstellungsdateien von der
+			Activity genutzt werden. Die Klasse <span class="tt">SharedPreferences</span>
+			besitzt Methoden wie <span class="tt">getString</span>, <span
+				class="tt">getBoolean</span> usw., welchen als erster Parameter der
+			Name der Einstellung übergeben wird. Ein zweiter Parameter gibt einen
+			Standardwert an, welche zurückgegeben wird, wenn der Parametername
+			nicht existiert.
+		</p>
+		<pre class="sh_java">public class PreferencesTestActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        
+        EditText editText = (EditText) findViewById(R.id.editText);
+        editText.setText(preferences.getString("myvalue", ""));
+    }
+}</pre>
+		<p>
+			Um Werte zu ändern, wird ein Editor benötigt. Diesen erhält man durch
+			Aufrug der Methode <span class="tt">edit()</span>. Der Editor besitzt
+			Methode zum Setzen von Einstellungen, wie <span class="tt">putString()</span>
+			und
+			<psan class="tt">putBoolean()</psan>
+			. Diese Methoden speichern die Einstellungen jedoch noch nicht auf
+			dem Gerät ab. Dazu muss am Ende die Methode <span class="tt">commit()</span>
+			aufgerufen werden. Um dieses Vorgehen zu demonstrieren, wird dem
+			Button ein <span class="tt">OnClickListener</span> hinzugefügt,
+			welcher den aktuellen Wert aus dem Textfeld nimmt und in den
+			Einstellungen speichert.
+		</p>
+		<pre class="sh_java">package de.hszg.mobileapps;
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class PreferencesTestActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        
+        final EditText editText = (EditText) findViewById(R.id.editText);
+        editText.setText(preferences.getString("myvalue", ""));
+        
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+                
+                Editor editor = preferences.edit();
+                editor.putString("myvalue", editText.getText().toString());
+                
+                editor.commit();
+            }
+        });
+    }
+}</pre>
+
 		<h3>Internal Storage</h3>
-		<p></p>
-		
+		<p>
+			Diese Art der Datenspeicherung ermöglicht es, Dateien zu speichern.
+			Mit der Methode <span class="tt">openFileOutput()</span> erhält man
+			einen <span class="tt">FileOutputStream</span>, welcher zum Schreiben
+			der Daten genutzt werden kann. Das vorangegange Beispiel wird nun so
+			abgeändert, dass der Wert in einer Datei gespeichert und aus dieser
+			wieder ausgelesen wird.
+		</p>
+		<pre class="sh_java">package de.hszg.mobileapps;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class PreferencesTestActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        
+        final EditText editText = (EditText) findViewById(R.id.editText);
+        
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput("test_file");
+            InputStreamReader reader = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(reader);
+            editText.setText(br.readLine());
+            
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } finally {
+            if(fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String string = editText.getText().toString();
+
+                try {
+                    FileOutputStream fos = openFileOutput("test_file", MODE_PRIVATE);
+                    fos.write(string.getBytes());
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+}</pre>
+
 		<h3>External Storage</h3>
 		<p></p>
-		
+
 		<h3>Datenbanken</h3>
 		<p></p>
 	</div>
