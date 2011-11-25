@@ -38,7 +38,7 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
     createChoice(q4, "Scala")
     createChoice(q4, "Java")
 
-    //createQuestion(questionnaire, "attachment", "Attachments")
+    createQuestion(questionnaire, "attachment", "Attachments")
   }
 
   private def createQuestion(questionnaire: Questionnaire, answerType: String, text: String) = {
