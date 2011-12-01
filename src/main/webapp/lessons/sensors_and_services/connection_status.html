@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Home</title>
+</head>
+<body class="lift:content_id=main">
+	<div id="main" class="lift:surround?with=default;at=content">
+		<h2>Verbindungsstatus</h2>
+		<p>Mobile Anwendungen unterliegen sich ständig ändernden
+			Bedingungen. Dazu kann auch ein Schwanken der Verbindungsqualität
+			oder sogar das ausfallen der Netzwerkverbindung gehören. Aus diesem
+			Grund bietet die Android API die Möglichkeit, sich über den aktuellen
+			Verbindungsstatus zu informieren.</p>
+		<p>
+			Für die Prüfung des Verbindgungsstatus stellt Android einen
+			Systemdienst, den Connectivity-Service, bereit. Innerhalb einer
+			Activity kann man mittels folgender Codezeile eine Instanz der Klasse
+			<span class="tt">ConnectivityManager</span> erhalten.
+		</p>
+		<pre class="sh_java">ConnectivityManager connectivityManager 
+	= (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);</pre>
+
+		<p>
+			Die Klasse <span class="tt">ConnectivityManager</span> besitzt die
+			Method <span class="tt">getNetworkInfo()</span>. Da mobile Endgeräte
+			oft mehrere Möglichkeiten besitzen, um eine Netzwerkverbindung
+			herzustellen, muss als Parameter der Typ der Netzwerkverbindung
+			angegeben werden. Dabei kann es sich zum Beispiel um eine
+			Mobilfunkverbindung oder WLAN handeln.
+		</p>
+		<pre class="sh_java">NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);</pre>
+		
+		<p>
+			Wie man sieht, erhält man ein Objekt vom Typ <span class="tt">NetworkInfo</span>. Die wichtigste
+			Methode dieser Klasse ist <span class="tt">isAvailable()</span>. 
+		</p>
+		
+		<pre class="sh_java">ConnectivityManager connectivityManager =
+	(ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+	
+NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+if (!wifi.isAvailable() && !mobile.isAvailable()) {
+	System.out.println("Verbindung besteht");
+} else {
+	System.out.println("Es besteht keine Verbindung");
+}</pre>
+	</div>
+</body>
+</html>

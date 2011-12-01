@@ -67,6 +67,8 @@ class Boot {
           Menu.i("STORAGE") / "lessons" / "sensors_and_services" / "storage",
           Menu.i("GEOLOCATION") / "lessons" / "sensors_and_services" / "geolocation",
           Menu.i("CAMERA") / "lessons" / "sensors_and_services" / "camera",
+          Menu.i("CONNECTION_STATUS") / "lessons" / "sensors_and_services" / "connection_status",
+          Menu.i("BACKGROUND_SERVICES") / "lessons" / "sensors_and_services" / "background_services",
           Menu.i("PROJECT_SENSORS_AND_SERVICES")/ "lessons" / "sensors_and_services" / "project"),
         Menu.i("VISUALIZATION") / "lessons" / "visualization" / "index"
         ))
