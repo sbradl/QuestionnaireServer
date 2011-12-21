@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Tutorial: Activities</title>
+</head>
+<body class="lift:content_id=main">
+	<div id="main" class="lift:surround?with=default;at=content">
+		<h2>Activities</h2>
+		<h3>Was sind Activities?</h3>
+		<p>Anwendungen bestehen in Android aus Activities. Darunter
+			versteht man Klassen, welche eine Komponente der Anwendung darstellen
+			und mit einer Benutzerschnittstelle ausgestattet sind. Eine Anwendung
+			kann aus mehreren Activities bestehen. Activities können andere
+			Activites starten. Die Main-Activity beschreibt die Activity, die dem
+			Benutzer beim Start der Anwendung angezeigt wird. Diese könnte ein
+			Menu enthalten. Wird ein Menueintrag ausgewählt, kann zum Beispiel
+			eine neue Activity gestartet werden.</p>
+
+		<h3>Lebenszyklus einer Activity</h3>
+		<p>
+			Die Android Plattform ist so konzipiert, dass immer nur eine Activity
+			zu einem bestimmten Zeitpunkt aktiv sein kann. Aus diesem Grund gibt
+			es einen festgelegten Lebenszyklus für Activities. Die Plattform ruft
+			je nach Stand innerhalb des Zyklus bestimmte Methoden der Activity
+			auf. Diese Methoden sind in der Oberklasse <code>android.app.Activity</code>
+			implementiert. Um auf den Lebenszyklus Einfluss zu nehmen, können
+			diese Methoden in der eigenen Activity-Klasse überschrieben werden.
+			Die folgende Abbildung stellt den gesamten Lebenszyklus dar. In den grauen Rechtecken befinden sich die angesprochenen
+			überschreibbaren Methoden.
+		</p>
+
+		<figure>
+			<img src="http://developer.android.com/images/activity_lifecycle.png" />
+			<figcaption>Activity-Lebenszyklus (&copy; <a href="http://developer.android.com/guide/topics/fundamentals/activities.html#Lifecycle">Google</a>)</figcaption>
+		</figure>
+
+		<h3>Erstellung von Activities</h3>
+		<p>Um eine Activity zu erstellen, muss wie bereits angesprochen eine Subklasse von <code>android.app.Activity</code> erstellt werden.
+		In der Subklasse muss mindestens die Methode <code>onCreate()</code> implementiert werden.</p>
+		<h3>Intents und Starten einer Activity</h3> 
+		<h3>Zustand einer Activity</h3>
+		<h4>Speicherung des Zustands</h4>
+		<h4>Wiederherstellung des Zustands</h4>
+	</div>
+</body>
+</html>

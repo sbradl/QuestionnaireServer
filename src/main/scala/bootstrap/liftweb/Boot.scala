@@ -57,6 +57,7 @@ class Boot {
         Menu.i("BASICS") / "lessons" / "basics" / "index" submenus (
           Menu.i("SETUP") / "lessons" / "basics" / "setup",
           Menu.i("HELLO_WORLD") / "lessons" / "basics" / "hello_world",
+          Menu.i("ACTIVITIES") / "lessons" / "basics" / "activities",
           Menu.i("USER_INTERFACES") / "lessons" / "basics" / "ui",
           Menu.i("PROJECT") / "lessons" / "basics" / "project"),
         Menu.i("WEBSERVICES") / "lessons" / "ws" / "index" submenus (
