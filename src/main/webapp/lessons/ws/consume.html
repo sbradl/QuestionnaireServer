@@ -9,14 +9,17 @@
 		<h2>Aufruf eines Webservice</h2>
 		<h3>Einleitung</h3>
 		<p>
-			Für die Nutzung von Webservices bietet Android das Paket <span
-				class="tt">org.apache.http</span>. In diesem ist unter anderem das
-			Paket <span class="tt">org.apache.http.client.methods</span>. Darin
-			befindet sich die Klasse <span class="tt">HttpGet</span>. Wie deren
-			Name bereits vermuten lässt, kann damit ein HTTP Get Request gesendet
-			werden. Dazu instanziiert man ein Objekt dieser Klasse und übergibt
-			als Parameter die URL des Webservice. Der folgende Abschnitt zeigt
-			den Aufruf eines Google-Webservice mittels dieser Methode.
+			Für die Nutzung von Webservices bietet Android das Paket
+			<code>org.apache.http</code>
+			. In diesem ist unter anderem das Paket
+			<code>org.apache.http.client.methods</code>
+			. Darin befindet sich die Klasse
+			<code>HttpGet</code>
+			. Wie deren Name bereits vermuten lässt, kann damit ein HTTP Get
+			Request gesendet werden. Dazu instanziiert man ein Objekt dieser
+			Klasse und übergibt als Parameter die URL des Webservice. Der
+			folgende Abschnitt zeigt den Aufruf eines Google-Webservice mittels
+			dieser Methode.
 		</p>
 
 		<h3>Einfache Google-Maps Anfrage</h3>
@@ -75,10 +78,12 @@
 &lt;/LinearLayout&gt;</pre>
 
 		<p>
-			In der Activity muss nun die Methode <span class="tt">onCreate</span>
+			In der Activity muss nun die Methode
+			<code>onCreate</code>
 			angepasst werden. Zuerst benötigen wir eine Referenz auf den Button,
-			damit wir einen <span class="tt">OnClickListener</span> mit ihm
-			verbinden können:
+			damit wir einen
+			<code>OnClickListener</code>
+			mit ihm verbinden können:
 		</p>
 
 		<pre class="sh_java">
@@ -98,13 +103,17 @@ public void onCreate(Bundle savedInstanceState) {
 }</pre>
 
 		<p>
-			Nun kann die Methode <span class="tt">onClick</span> des Listeners
-			implementiert werden. Diese muss eine URL für die Anfrage generieren.
-			Dazu wird der Inhalt des Eingabefeldes benötigt. Mit der erzeugten
-			URL kann nun das <span class="tt">HttpGet</span>-Objekt erzeugt
-			werden. Um den Http GET Request auszuführen, muss noch ein Objekt der
-			Klasse <span class="tt">HttpClient</span> erstellt werden. Bis zu
-			diesem Punkt sollte der Code in etwa wie folgt aussehen:
+			Nun kann die Methode
+			<code>onClick</code>
+			des Listeners implementiert werden. Diese muss eine URL für die
+			Anfrage generieren. Dazu wird der Inhalt des Eingabefeldes benötigt.
+			Mit der erzeugten URL kann nun das
+			<code>HttpGet</code>
+			-Objekt erzeugt werden. Um den Http GET Request auszuführen, muss
+			noch ein Objekt der Klasse
+			<code>HttpClient</code>
+			erstellt werden. Bis zu diesem Punkt sollte der Code in etwa wie
+			folgt aussehen:
 		</p>
 
 		<pre class="sh_java">
@@ -151,12 +160,15 @@ public void onCreate(Bundle savedInstanceState) {
 
 		<p>
 			Wenn man die Anwendung nun startet und versucht, eine Abfrage zu
-			senden, so wird eine <span class="tt">IOException</span> geworfen.
-			Diese hat ihren Ursprung in den Berechtigungen. Eine Anwendung muss
-			explizit angeben, dass sie Zugriff auf das Internet benötigt. Diese
-			Einstellung nimmt man in der Datei <span class="tt">AndroidManifest.xml</span>
-			vor. Dort erstellt man innerhalb des <span class="tt">manifest</span>-Elementes
-			folgendes Kindelement:
+			senden, so wird eine
+			<code>IOException</code>
+			geworfen. Diese hat ihren Ursprung in den Berechtigungen. Eine
+			Anwendung muss explizit angeben, dass sie Zugriff auf das Internet
+			benötigt. Diese Einstellung nimmt man in der Datei
+			<code>AndroidManifest.xml</code>
+			vor. Dort erstellt man innerhalb des
+			<code>manifest</code>
+			-Elementes folgendes Kindelement:
 		</p>
 
 		<pre>&lt;uses-permission android:name="android.permission.INTERNET"&gt;&lt;/uses-permission&gt;</pre>
@@ -166,12 +178,16 @@ public void onCreate(Bundle savedInstanceState) {
 
 		<p>
 			Die Daten, welche der Webservice zurück sendet befinden sich in einem
-			Objekt vom Typ <span class="tt">Entity</span>. Dieses erhält man
-			mittels <span class="tt">response.getEntity()</span>. Die
-			Helferklasse <span class="tt">EntityUtils</span> kann den Inhalt des
-			<span class="tt">Entity</span>-Objekts extrahieren und als String
-			zurückliefern. Dieser String kann nun in unserem Ausgabefeld
-			angezeigt werden.
+			Objekt vom Typ
+			<code>Entity</code>
+			. Dieses erhält man mittels
+			<code>response.getEntity()</code>
+			. Die Helferklasse
+			<code>EntityUtils</code>
+			kann den Inhalt des
+			<code>Entity</code>
+			-Objekts extrahieren und als String zurückliefern. Dieser String kann
+			nun in unserem Ausgabefeld angezeigt werden.
 		</p>
 
 		<pre class="sh_java">
@@ -198,10 +214,13 @@ responseText.setText(data);
 			Bisher wird einfach der vom Webservice gelieferte XML-Code angezeigt.
 			Aus diesem werden wir nun mittels XPath den Längen- und Breitengrad
 			herausfiltern und für die Anzeige verwenden. Dafür nutzen wir die
-			Klassen <span class="tt">org.xml.sax.InputSource</span>, <span
-				class="tt">javax.xml.xpath.XPath</span> und einige weitere. Die
-			Antwort des Webservice entählt einen Status. Bevor die Positionsdaten
-			extrahiert werden können, sollte dieser überprüft werden:
+			Klassen
+			<code>org.xml.sax.InputSource</code>
+			,
+			<code>javax.xml.xpath.XPath</code>
+			und einige weitere. Die Antwort des Webservice entählt einen Status.
+			Bevor die Positionsdaten extrahiert werden können, sollte dieser
+			überprüft werden:
 		</p>
 
 		<pre class="sh_java">
@@ -247,10 +266,10 @@ public void onClick(View v) {
 }</pre>
 
 		<p>
-			Die Positionsdaten befinden sich im Element <span class="tt">result/geometry/location</span>.
+			Die Positionsdaten befinden sich im Element <code>result/geometry/location</code>.
 			Diese werden nun mittels XPath ermittelt und im Textfeld ausgegeben.
 		</p>
-		
+
 		<pre class="sh_java">
 String lat = (String) xpath.evaluate("//geometry/location/lat/text()", doc,
         XPathConstants.STRING);
@@ -260,7 +279,8 @@ String lng = (String) xpath.evaluate("//geometry/location/lng/text()", doc,
 
 responseText.setText(String.format("Latitude: %s\nLongitude: %s", lat, lng));</pre>
 
-		<p>Der gesamte Quelltext der Activity sollte nun in etwa wie folgt aussehen:</p>
+		<p>Der gesamte Quelltext der Activity sollte nun in etwa wie folgt
+			aussehen:</p>
 		<pre class="sh_java">package de.hszigr.mobileapps;
 
 import java.io.StringReader;

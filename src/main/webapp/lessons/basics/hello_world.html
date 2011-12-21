@@ -90,15 +90,20 @@
 		<p>
 			Um auf ein Element der Benutzeroberfläche zugreifen zu können, muss
 			dieses eine eindeutige ID besitzen. In der Datei <span class="tt">res/layout/main.xml</span>
-			wird diese dem <span class="tt">TextView</span>-Element mit einem
-			Attribut zugeordnet: <span class="tt">android:id="@+id/textview"</span>.
-			In dem Attribut bedeutet <span class="tt">@+id</span>, dass der Teil
-			nach dem <span class="tt">/</span> vom XML-Parser verarbeitet werden
-			soll und das es sich um eine ID handelt. Zusätzlich wird die ID als
-			neu behandelt (durch das <span class="tt">+</span> gekennzeichnet)
-			und in die Liste der Ressourcen eingetragen. Der Quelltext der Datei
-			<span class="tt">res/layout/main.xml</span> sollte nun etwa wie folgt
-			aussehen:
+			wird diese dem
+			<code>TextView</code>
+			-Element mit einem Attribut zugeordnet:
+			<code>android:id="@+id/textview"</code>
+			. In dem Attribut bedeutet
+			<code>@+id</code>
+			, dass der Teil nach dem
+			<code>/</code>
+			vom XML-Parser verarbeitet werden soll und das es sich um eine ID
+			handelt. Zusätzlich wird die ID als neu behandelt (durch das
+			<code>+</code>
+			gekennzeichnet) und in die Liste der Ressourcen eingetragen. Der
+			Quelltext der Datei <span class="tt">res/layout/main.xml</span>
+			sollte nun etwa wie folgt aussehen:
 		</p>
 		<pre class="sh_xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -119,13 +124,14 @@
 		<p>
 			Um eine neue Testklasse zu erstellen, wird per Rechtsklick auf das
 			Testpackage das Menu <span class="tt">New => Class</span> aufgerufen.
-			Als Name geben wir "HelloWorldTest" ein. Als Superklasse wird <span
-				class="tt">ActivityInstrumentationTestCase2&lt;HelloWorldActivity&gt;</span>
-			angegeben. Eine <span class="tt">import</span>-Anweisung für die zu
-			testenden Activity wird hierbei nicht automatisch erstellt und muss
-			somit per Hand eingegeben werden. Auch ein Konstruktor muss explizit
-			definiert werden. Der gesamte Quelltext der Testklasse sollte nun wie
-			folgt aussehen:
+			Als Name geben wir "HelloWorldTest" ein. Als Superklasse wird
+			<code>ActivityInstrumentationTestCase2&lt;HelloWorldActivity&gt;</code>
+			angegeben. Eine
+			<code>import</code>
+			-Anweisung für die zu testenden Activity wird hierbei nicht
+			automatisch erstellt und muss somit per Hand eingegeben werden. Auch
+			ein Konstruktor muss explizit definiert werden. Der gesamte Quelltext
+			der Testklasse sollte nun wie folgt aussehen:
 		</p>
 		<pre class="sh_java">package de.hszigr.mobileapps.helloworld.test;
 
@@ -144,13 +150,18 @@ public class HelloWorldTest extends ActivityInstrumentationTestCase2&lt;HelloWor
 		<p>
 			Der nächste Schritt besteht in der Implementation der von JUnit
 			bekannten Methode setUp(). In dieser wird die Activity gestartet und
-			das <span class="tt">TextView</span>-Element gespeichert, welches den
-			auszugebenden Text enthält. Außerdem speichern wir den erwarteten
-			Text aus der Ressourcendatei in einem Feld ab. Um eine Referenz auf
-			das <span class="tt">TextView</span>-Element zu erhalten, wird die
-			Methode <span class="tt">findViewById()</span> der Activity-Klasse
-			aufgerufen. Der Rückgabewert muss dann aber noch in ein Objekt vom
-			Typ <span class="tt">TextView</span> gecastet werden.
+			das
+			<code>TextView</code>
+			-Element gespeichert, welches den auszugebenden Text enthält.
+			Außerdem speichern wir den erwarteten Text aus der Ressourcendatei in
+			einem Feld ab. Um eine Referenz auf das
+			<code>TextView</code>
+			-Element zu erhalten, wird die Methode
+			<code>findViewById()</code>
+			der Activity-Klasse aufgerufen. Der Rückgabewert muss dann aber noch
+			in ein Objekt vom Typ
+			<code>TextView</code>
+			gecastet werden.
 		</p>
 		<pre class="sh_java">@Override
 protected void setUp() throws Exception {
@@ -164,18 +175,25 @@ protected void setUp() throws Exception {
 		<h4>Vorbedingungen testen</h4>
 		<p>
 			Als nächstes wird eine Testmethode erstellt, welche überprüft, dass
-			die Benutzeroverfläche auch das entsprechende <span class="tt">TextView</span>-Element
-			enthält. Dieser Test besteht einfach darin zu testen, ob die Referenz
-			ungleich <span class="tt">null</span> ist.
+			die Benutzeroverfläche auch das entsprechende
+			<code>TextView</code>
+			-Element enthält. Dieser Test besteht einfach darin zu testen, ob die
+			Referenz ungleich
+			<code>null</code>
+			ist.
 		</p>
 		<pre class="sh_java">public void testPreconditions() {
     assertNotNull(textView);
 }</pre>
 
 		<h4>Test der angezeigten Zeichenkette</h4>
-		<p>Für diesen Test nutzen wir den in dem Feld <span class="tt">expectedString</span>
+		<p>
+			Für diesen Test nutzen wir den in dem Feld
+			<code>expectedString</code>
 			gespeichert Wert aus der Ressourcendatei und den Wert des
-			<span class="tt">TextView</span>-Objekts.</p>
+			<code>TextView</code>
+			-Objekts.
+		</p>
 		<pre class="sh_java">public void testText() {
     assertEquals(expectedString, (String)textView.getText());
 }</pre>
@@ -213,7 +231,9 @@ public class HelloWorldTest extends
     public void testText() {
         assertEquals(expectedString, (String)textView.getText());
     }
-}</pre>
+}
+		
+		</pre>
 
 		<h4>Ausführung der Tests</h4>
 		<p>

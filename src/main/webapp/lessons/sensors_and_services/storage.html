@@ -26,16 +26,21 @@
 			Button soll der neue Wert gespeichert werden. Dieser sollte dann beim
 			nächsten Start der Activity angezeigt werden.</p>
 		<p>
-			Um Werte auszulesen, gibt es die Methoden <span class="tt">getPreferences()</span>
-			und <span class="tt">getSharedPreferences()</span>. Der Unterschied
-			besteht darin, dass bei der zweiten Methode ein Name angegeben werden
-			kann. Dies wird benötigt, wenn mehrere Einstellungsdateien von der
-			Activity genutzt werden. Die Klasse <span class="tt">SharedPreferences</span>
-			besitzt Methoden wie <span class="tt">getString</span>, <span
-				class="tt">getBoolean</span> usw., welchen als erster Parameter der
-			Name der Einstellung übergeben wird. Ein zweiter Parameter gibt einen
-			Standardwert an, welche zurückgegeben wird, wenn der Parametername
-			nicht existiert.
+			Um Werte auszulesen, gibt es die Methoden
+			<code>getPreferences()</code>
+			und
+			<code>getSharedPreferences()</code>
+			. Der Unterschied besteht darin, dass bei der zweiten Methode ein
+			Name angegeben werden kann. Dies wird benötigt, wenn mehrere
+			Einstellungsdateien von der Activity genutzt werden. Die Klasse
+			<code>SharedPreferences</code>
+			besitzt Methoden wie
+			<code>getString</code>
+			,
+			<code>getBoolean</code>
+			usw., welchen als erster Parameter der Name der Einstellung übergeben
+			wird. Ein zweiter Parameter gibt einen Standardwert an, welche
+			zurückgegeben wird, wenn der Parametername nicht existiert.
 		</p>
 		<pre class="sh_java">public class PreferencesTestActivity extends Activity {
 
@@ -52,14 +57,14 @@
 }</pre>
 		<p>
 			Um Werte zu ändern, wird ein Editor benötigt. Diesen erhält man durch
-			Aufrug der Methode <span class="tt">edit()</span>. Der Editor besitzt
-			Methode zum Setzen von Einstellungen, wie <span class="tt">putString()</span>
+			Aufrug der Methode <code>edit()</code>. Der Editor besitzt
+			Methode zum Setzen von Einstellungen, wie <code>putString()</code>
 			und
-			<psan class="tt">putBoolean()</psan>
+			<code>putBoolean()</code>
 			. Diese Methoden speichern die Einstellungen jedoch noch nicht auf
-			dem Gerät ab. Dazu muss am Ende die Methode <span class="tt">commit()</span>
+			dem Gerät ab. Dazu muss am Ende die Methode <code>commit()</code>
 			aufgerufen werden. Um dieses Vorgehen zu demonstrieren, wird dem
-			Button ein <span class="tt">OnClickListener</span> hinzugefügt,
+			Button ein <code>OnClickListener</code> hinzugefügt,
 			welcher den aktuellen Wert aus dem Textfeld nimmt und in den
 			Einstellungen speichert.
 		</p>
@@ -105,8 +110,8 @@ public class PreferencesTestActivity extends Activity {
 		<h3>Internal Storage</h3>
 		<p>
 			Diese Art der Datenspeicherung ermöglicht es, Dateien zu speichern.
-			Mit der Methode <span class="tt">openFileOutput()</span> erhält man
-			einen <span class="tt">FileOutputStream</span>, welcher zum Schreiben
+			Mit der Methode <code>openFileOutput()</code> erhält man
+			einen <code>FileOutputStream</code>, welcher zum Schreiben
 			der Daten genutzt werden kann. Das vorangegange Beispiel wird nun so
 			abgeändert, dass der Wert in einer Datei gespeichert und aus dieser
 			wieder ausgelesen wird.
@@ -175,15 +180,16 @@ public class PreferencesTestActivity extends Activity {
 
 		<h3>External Storage und Datenbanken</h3>
 		<p>
-			Mit External Storage ist es möglich, Daten auf einer Speicherkarte abzulegen. Außerdem
-			unterstützt Android SQLite Datenbanken. Eine Übersicht über die Verwendung dieser beiden 
-			Methoden findet man auf der Entwicklerseite von Android unter 
-			<a href="http://developer.android.com/guide/topics/data/data-storage.html">http://developer.android.com/guide/topics/data/data-storage.html</a>.
+			Mit External Storage ist es möglich, Daten auf einer Speicherkarte
+			abzulegen. Außerdem unterstützt Android SQLite Datenbanken. Eine
+			Übersicht über die Verwendung dieser beiden Methoden findet man auf
+			der Entwicklerseite von Android unter <a
+				href="http://developer.android.com/guide/topics/data/data-storage.html">http://developer.android.com/guide/topics/data/data-storage.html</a>.
 		</p>
 		<p style="font-weight: bold">
-            <span style="color: #ff0000">Hinweis</span>: Für die Projektaufgabe werden nur Internal Storage
-            und Shared Preferences benötigt.
-        </p>
+			<span style="color: #ff0000">Hinweis</span>: Für die Projektaufgabe
+			werden nur Internal Storage und Shared Preferences benötigt.
+		</p>
 	</div>
 </body>
 </html>

@@ -11,22 +11,30 @@
 			Geolocation erlaubt es, die akutelle Position des Benutzers zu
 			ermitteln. Dafür kann das Endgerät verschiedene Datenqullen wie GPS,
 			WiFi oder das Mobilfunknetz nutzen. Um an Positionsdaten zu gelangen,
-			muss ein <span class="tt">LocationListener</span> erzeugt werden.
-			Dieser enthält Callback-Methoden, welche vom System aufgrufen werden,
-			falls sich die Positionsdaten geändert haben.
+			muss ein
+			<code>LocationListener</code>
+			erzeugt werden. Dieser enthält Callback-Methoden, welche vom System
+			aufgrufen werden, falls sich die Positionsdaten geändert haben.
 		</p>
 		<p>Zum Testen dieses Vorgehens wird zuerst ein neues Projekt mit
 			einer Activity angelegt. Diese besteht lediglich aus einer
 			Textausgabe. In dieser werden später die Positionsdaten angezeigt.</p>
 		<p>
-			Der angesprochene <span class="tt">LocationListener</span> muss beim
-			<span class="tt">LocationManager</span> registriert werden. Der <span
-				class="tt">LocationManager</span> ist eine System-Service. Man
-			erhält ihn durch einen Aufruf der Methode <span class="tt">getSystemService(LOCATION_SERVICE)</span>.
-			Der Service besitzt die Methode <span class="tt">requestLocationUpdates()</span>.
-			Mit dieser kann der zu nutzende Location-Provider (Netzwerk, GPS,
-			...) sowie der <span class="tt">LocationListener</span> gesetzt
-			werden.
+			Der angesprochene
+			<code>LocationListener</code>
+			muss beim
+			<code>LocationManager</code>
+			registriert werden. Der
+			<code>LocationManager</code>
+			ist eine System-Service. Man erhält ihn durch einen Aufruf der
+			Methode
+			<code>getSystemService(LOCATION_SERVICE)</code>
+			. Der Service besitzt die Methode
+			<code>requestLocationUpdates()</code>
+			. Mit dieser kann der zu nutzende Location-Provider (Netzwerk, GPS,
+			...) sowie der
+			<code>LocationListener</code>
+			gesetzt werden.
 		</p>
 		<pre class="sh_java">package de.hszg.mobileapps;
 
@@ -71,9 +79,9 @@ public class GeolocationTestActivity extends Activity {
                 locationListener);
     }
 }</pre>
-		<p>Vor dem Testen muss auf dem Gerät GPS oder WLAN aktiviert werden und in
-			der Manifest Datei muss der Anwendung der Zugriff auf den Location-Service
-			erlaubt werden:</p>
+		<p>Vor dem Testen muss auf dem Gerät GPS oder WLAN aktiviert
+			werden und in der Manifest Datei muss der Anwendung der Zugriff auf
+			den Location-Service erlaubt werden:</p>
 		<pre class="sh_xml">&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;</pre>
 	</div>
 </body>
