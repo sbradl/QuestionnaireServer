@@ -23,25 +23,145 @@
 			zu einem bestimmten Zeitpunkt aktiv sein kann. Aus diesem Grund gibt
 			es einen festgelegten Lebenszyklus für Activities. Die Plattform ruft
 			je nach Stand innerhalb des Zyklus bestimmte Methoden der Activity
-			auf. Diese Methoden sind in der Oberklasse <code>android.app.Activity</code>
+			auf. Diese Methoden sind in der Oberklasse
+			<code>android.app.Activity</code>
 			implementiert. Um auf den Lebenszyklus Einfluss zu nehmen, können
 			diese Methoden in der eigenen Activity-Klasse überschrieben werden.
-			Die folgende Abbildung stellt den gesamten Lebenszyklus dar. In den grauen Rechtecken befinden sich die angesprochenen
-			überschreibbaren Methoden.
+			Die folgende Abbildung stellt den gesamten Lebenszyklus dar. In den
+			grauen Rechtecken befinden sich die angesprochenen überschreibbaren
+			Methoden.
 		</p>
 
 		<figure>
 			<img src="http://developer.android.com/images/activity_lifecycle.png" />
-			<figcaption>Activity-Lebenszyklus (&copy; <a href="http://developer.android.com/guide/topics/fundamentals/activities.html#Lifecycle">Google</a>)</figcaption>
+			<figcaption>
+				Activity-Lebenszyklus (&copy; <a
+					href="http://developer.android.com/guide/topics/fundamentals/activities.html#Lifecycle">Google</a>)
+			</figcaption>
 		</figure>
 
 		<h3>Erstellung von Activities</h3>
-		<p>Um eine Activity zu erstellen, muss wie bereits angesprochen eine Subklasse von <code>android.app.Activity</code> erstellt werden.
-		In der Subklasse muss mindestens die Methode <code>onCreate()</code> implementiert werden.</p>
-		<h3>Intents und Starten einer Activity</h3> 
+		<p>
+			Um eine Activity zu erstellen, muss wie bereits angesprochen eine
+			Subklasse von
+			<code>android.app.Activity</code>
+			erstellt werden. In der Subklasse muss mindestens die Methode
+			<code>onCreate()</code>
+			implementiert werden. Im einfachsten Fall wird das XML-Layout der
+			Benutzeroberfläche in dieser Methode geladen, welches dann mittels
+			der Methode
+			<code>setContentView()</code>
+			aktiviert wird. Andere wichtige Callback-Funktionen werden in den
+			Abschnitten über Zustände von Activities behandelt, da sie in diesem
+			Zusammenhang am häufigsten benötigt werden. Jede Android-Anwendung
+			besitzt auch ein Manifest. In dieser XML-Datei muss die Activity
+			eingetragen werden:
+		</p>
+		<pre class="sh_xml">&lt;activity android:name=".MyActivity" /&gt;</pre>
+
+		<h3>Intents und Starten einer Activity</h3>
+		<p>Mit Intents beschreibt man Absichten, welche einer zu
+			startenden Activity mitgeteilt werden. Anders ausgedrückt, will man
+			eine Activity starten, so muss man ihr den Grund dafür mitteilen. Mit
+			welchen Intents eine Activity umgehen kann, wird in der
+			Manifest-Datei festgelegt. Für die Haupt-Activity ist hierfür bereits
+			ein Eintrag vorhanden:</p>
+
+		<pre class="sh_xml">&lt;intent-filter&gt;
+	&lt;action android:name="android.intent.action.MAIN" /&gt;
+	&lt;category android:name="android.intent.category.LAUNCHER" /&gt;
+&lt;/intent-filter&gt;</pre>
+
+		<p>
+			Das eigentliche Starten einer Activity geschieht mit der Methode
+			<code>startActivity()</code>
+			, welche als Parameter ein Intent erhält. Ein Intent wird mit der
+			Klasse
+			<code>Intent</code>
+			erstellt. Ein Intent muss die zu startende Activity beschreiben.
+			Daher kann als Parameter für den Konstruktor eine Activity-Klasse
+			angegeben werden oder eine Aktion, die durchgeführt werden soll:
+		</p>
+
+		<pre class="sh_java">Intent intent = new Intent(this, MyOtherActivity.class);
+startActivity(intent);</pre>
+
+		<figure>
+			<pre class="sh_java" style="margin: 0px">Intent intent = new Intent(Intent.ACTION_SEND);
+intent.putExtra(Intent.EXTRA_EMAIL, recipientArray);
+startActivity(intent);</pre>
+			<figcaption>
+				Starten einer Activity per Aktion (&copy; <a
+					href="http://developer.android.com/guide/topics/fundamentals/activities.html">Google</a>)
+			</figcaption>
+		</figure>
+
+		<p>
+			Im zweiten Code-Beispiel wurden dem Intent noch zusätzliche Daten mit
+			der Methode
+			<code>putExtra()</code>
+			hinzugefügt. Auf diese Art ist es möglich, zwischen Activities Daten
+			auszutauschen.
+		</p>
+		<p>
+			Es gibt noch eine weitere Art, Activites zu starten. Möchte man von
+			einer Activity ein Ergebnis erhalten, so muss man die Methode
+			<code>startActivityForResult()</code>
+			verwenden. Zusätzlich muss die Methode
+			<code>onActivityResult()</code>
+			überschrieben werden, in welcher man auf das Ergebnis reagieren kann.
+		</p>
+
 		<h3>Zustand einer Activity</h3>
+		<p>Eine Besonderheit der Android-Plattform ist, dass eine Activity
+			zu jeder Zeit unterbrochen werden kann. Dies kann zum Beispiel
+			passieren, wenn eine andere Activity in den Vordergrund rückt, wie es
+			unter Anderem bei einem eingehenden Anruf der Fall ist. Dabei kann es
+			je nach Situation vorkommen, dass die Activity vom System zerstört
+			wird. Nachdem die Activity, die sich in dern Vordergrund gedrängt
+			hat, wieder beendet wurde, erwartet der Benutzer in der Regel, dass
+			er die vorherige Activity im alten Zustand vorfindet. Dieser Umstand
+			macht es nötig, den Zustand einer Activity bei Bedarf zu speichern
+			und wieder herzustellen.</p>
 		<h4>Speicherung des Zustands</h4>
+		<p>
+			Die Speicherung des Zustandes erfolgt in der Methode
+			<code>onSaveInstanceState()</code>
+			. Diese wird vom System automatisch aufgerufen, wenn es nötig ist.
+			Der Methode
+			<code>onSaveInstanceState()</code>
+			wird ein Objekt vom Typ
+			<code>Bundle</code>
+			übergeben, in welchem Daten in Schlüssel-Wert-Paaren abgelegt werden
+			können.
+		</p>
+
 		<h4>Wiederherstellung des Zustands</h4>
+		<p>
+			Die Methode
+			<code>onCreate()</code>
+			erhält als Parameter ein
+			<code>Bundle</code>
+			. Wurde vorher die Methode
+			<code>onSaveInstanceState()</code>
+			aufgerufen und Werte gesichert, so können diese nun beim erneuten
+			Erstellen der Activity zur Wiederherstellung des Zustandes genutzt
+			werden. Wurde
+			<code>onSaveInstanceState()</code>
+			nicht aufgerufen, so ist der
+			<code>Bundle</code>
+			-Parameter
+			<code>null</code>
+			.
+		</p>
+
+		<h3>Beispiel</h3>
+		<p>Um die Fakten aus den vorherigen Abschnitten zu erproben, wird
+			nun eine kleine Beispielanwendung erstellt. Diese soll eine kurze
+			Nachricht ausgeben, wann immer eine Callback-Methode vom System
+			aufgerufen wird. Außerdem wird es einen Button geben, über den eine
+			andere Activity in den Vordergrund rückt. Daher ist das Speichern und
+			Wiederherstellen des Zustands nötig.</p>
 	</div>
 </body>
 </html>

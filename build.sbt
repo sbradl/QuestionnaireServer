@@ -11,7 +11,7 @@ resolvers += "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshot
 seq(webSettings: _*)
  
 libraryDependencies ++= {
-  val liftVersion = "2.4-M4"
+  val liftVersion = "2.4-RC1"
   Seq(
     "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default",
     "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default",

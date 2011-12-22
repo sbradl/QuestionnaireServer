@@ -68,3 +68,12 @@
 	font-family: monospace;
 	font-size: 1.2em;
 }
+
+#main figure {
+	margin-bottom: 8px;
+	border: 1px solid #dddddd;
+}
+
+#main figcaption {
+	text-align: right;
+}
