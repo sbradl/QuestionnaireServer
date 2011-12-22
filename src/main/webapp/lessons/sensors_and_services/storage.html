@@ -57,16 +57,20 @@
 }</pre>
 		<p>
 			Um Werte zu ändern, wird ein Editor benötigt. Diesen erhält man durch
-			Aufrug der Methode <code>edit()</code>. Der Editor besitzt
-			Methode zum Setzen von Einstellungen, wie <code>putString()</code>
+			Aufrug der Methode
+			<code>edit()</code>
+			. Der Editor besitzt Methode zum Setzen von Einstellungen, wie
+			<code>putString()</code>
 			und
 			<code>putBoolean()</code>
 			. Diese Methoden speichern die Einstellungen jedoch noch nicht auf
-			dem Gerät ab. Dazu muss am Ende die Methode <code>commit()</code>
+			dem Gerät ab. Dazu muss am Ende die Methode
+			<code>commit()</code>
 			aufgerufen werden. Um dieses Vorgehen zu demonstrieren, wird dem
-			Button ein <code>OnClickListener</code> hinzugefügt,
-			welcher den aktuellen Wert aus dem Textfeld nimmt und in den
-			Einstellungen speichert.
+			Button ein
+			<code>OnClickListener</code>
+			hinzugefügt, welcher den aktuellen Wert aus dem Textfeld nimmt und in
+			den Einstellungen speichert.
 		</p>
 		<pre class="sh_java">package de.hszg.mobileapps;
 
@@ -110,11 +114,13 @@ public class PreferencesTestActivity extends Activity {
 		<h3>Internal Storage</h3>
 		<p>
 			Diese Art der Datenspeicherung ermöglicht es, Dateien zu speichern.
-			Mit der Methode <code>openFileOutput()</code> erhält man
-			einen <code>FileOutputStream</code>, welcher zum Schreiben
-			der Daten genutzt werden kann. Das vorangegange Beispiel wird nun so
-			abgeändert, dass der Wert in einer Datei gespeichert und aus dieser
-			wieder ausgelesen wird.
+			Mit der Methode
+			<code>openFileOutput()</code>
+			erhält man einen
+			<code>FileOutputStream</code>
+			, welcher zum Schreiben der Daten genutzt werden kann. Das
+			vorangegange Beispiel wird nun so abgeändert, dass der Wert in einer
+			Datei gespeichert und aus dieser wieder ausgelesen wird.
 		</p>
 		<pre class="sh_java">package de.hszg.mobileapps;
 
@@ -178,12 +184,44 @@ public class PreferencesTestActivity extends Activity {
     }
 }</pre>
 
-		<h3>External Storage und Datenbanken</h3>
+		<h3>Datenbanken</h3>
+		<p>
+			Sollten die ersten beiden Varianten zur Datenspeicherung nicht
+			ausreichen, so kann als Alternative SQLite verwendet werden. Die
+			Android-Plattform stellt die Klasse
+			<code>SQLiteOpenHelper</code>
+			zur Verfügung. Erbt man von dieser Klasse kann die Methode
+			<code>onCreate()</code>
+			überschrieben werden. Innerhalb dieser kann ein SQL-Statement zur
+			Erstellung der Datenbank ausgeführt werden:
+		</p>
+		<pre class="sh_java">public class MyDatabaseOpenHelper extends SQLiteOpenHelper {
+
+    MyDatabaseOpenHelper(Context context) {
+        super(context, "MyDB", null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE mytable (" +
+                "column1 TEXT, " +
+                "column2 TEXT);");
+    }
+}</pre>
+
+		<p>Der letzte Parameter, der dem Oberklassen-Konstruktor übergeben wird ist die Version der Datenbank. Sobald diese erhöht oder verringert wird,
+		wird die Datenank neu erstellt. Dafür müssen die Methoden <code>onUpgrade()</code> sowie <code>onDowngrade()</code> überschrieben werden. Innerhalb
+		dieser können alte Tabellen gelöscht und neue angelegt werden. Der Lese- und Schreibzugriff auf die Datenbank erfolgt über ein Objekt
+		vom Typ <code>SQLiteDatabase</code>. Dieses erhält man mit den methode <code>getReadableDatabase()</code> bzw. 
+		<code>getWritableDatabase()</code>. Unter <a href="http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html">http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html</a>
+		können von dieser Klasse zur Verfügung gestellte Methoden betrachtet werden. Wichtig sind vor allem die Methoden <code>execSQL()</code>
+		sowie <code>query()</code> mit seinen Überladungen</p>.
+
+		<h3>External Storage</h3>
 		<p>
 			Mit External Storage ist es möglich, Daten auf einer Speicherkarte
-			abzulegen. Außerdem unterstützt Android SQLite Datenbanken. Eine
-			Übersicht über die Verwendung dieser beiden Methoden findet man auf
-			der Entwicklerseite von Android unter <a
+			abzulegen. Eine Übersicht über die Verwendung dieser Methode findet
+			man auf der Entwicklerseite von Android unter <a
 				href="http://developer.android.com/guide/topics/data/data-storage.html">http://developer.android.com/guide/topics/data/data-storage.html</a>.
 		</p>
 		<p style="font-weight: bold">
