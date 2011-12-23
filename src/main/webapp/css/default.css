@@ -1,3 +1,11 @@
+header {
+	text-align: right;
+}
+
+footer {
+	text-align: center;
+}
+
 .edit_error_class {
   display: block;
   color: red;

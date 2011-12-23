@@ -5,163 +5,376 @@
 <title>Tutorial: Activities</title>
 </head>
 <body class="lift:content_id=main">
-	<div id="main" class="lift:surround?with=default;at=content">
-		<h2>Activities</h2>
-		<h3>Was sind Activities?</h3>
-		<p>Anwendungen bestehen in Android aus Activities. Darunter
-			versteht man Klassen, welche eine Komponente der Anwendung darstellen
-			und mit einer Benutzerschnittstelle ausgestattet sind. Eine Anwendung
-			kann aus mehreren Activities bestehen. Activities können andere
-			Activites starten. Die Main-Activity beschreibt die Activity, die dem
-			Benutzer beim Start der Anwendung angezeigt wird. Diese könnte ein
-			Menu enthalten. Wird ein Menueintrag ausgewählt, kann zum Beispiel
-			eine neue Activity gestartet werden.</p>
+	<article id="main" class="lift:surround?with=default;at=content">
+		<h2>
+			Activities
+			</h1>
 
-		<h3>Lebenszyklus einer Activity</h3>
-		<p>
-			Die Android Plattform ist so konzipiert, dass immer nur eine Activity
-			zu einem bestimmten Zeitpunkt aktiv sein kann. Aus diesem Grund gibt
-			es einen festgelegten Lebenszyklus für Activities. Die Plattform ruft
-			je nach Stand innerhalb des Zyklus bestimmte Methoden der Activity
-			auf. Diese Methoden sind in der Oberklasse
-			<code>android.app.Activity</code>
-			implementiert. Um auf den Lebenszyklus Einfluss zu nehmen, können
-			diese Methoden in der eigenen Activity-Klasse überschrieben werden.
-			Die folgende Abbildung stellt den gesamten Lebenszyklus dar. In den
-			grauen Rechtecken befinden sich die angesprochenen überschreibbaren
-			Methoden.
-		</p>
+			<section>
+				<h3>Was sind Activities?</h3>
+				<p>Anwendungen bestehen in Android aus Activities. Darunter
+					versteht man Klassen, welche eine Komponente der Anwendung
+					darstellen und mit einer Benutzerschnittstelle ausgestattet sind.
+					Eine Anwendung kann aus mehreren Activities bestehen. Activities
+					können andere Activites starten. Die Main-Activity beschreibt die
+					Activity, die dem Benutzer beim Start der Anwendung angezeigt wird.
+					Diese könnte ein Menu enthalten. Wird ein Menueintrag ausgewählt,
+					kann zum Beispiel eine neue Activity gestartet werden.</p>
+			</section>
 
-		<figure>
-			<img src="http://developer.android.com/images/activity_lifecycle.png" />
-			<figcaption>
-				Activity-Lebenszyklus (&copy; <a
-					href="http://developer.android.com/guide/topics/fundamentals/activities.html#Lifecycle">Google</a>)
-			</figcaption>
-		</figure>
+			<section>
+				<h3>Lebenszyklus einer Activity</h3>
+				<p>
+					Die Android Plattform ist so konzipiert, dass immer nur eine
+					Activity zu einem bestimmten Zeitpunkt aktiv sein kann. Aus diesem
+					Grund gibt es einen festgelegten Lebenszyklus für Activities. Die
+					Plattform ruft je nach Stand innerhalb des Zyklus bestimmte
+					Methoden der Activity auf. Diese Methoden sind in der Oberklasse
+					<code>android.app.Activity</code>
+					implementiert. Um auf den Lebenszyklus Einfluss zu nehmen, können
+					diese Methoden in der eigenen Activity-Klasse überschrieben werden.
+					Die folgende Abbildung stellt den gesamten Lebenszyklus dar. In den
+					grauen Rechtecken befinden sich die angesprochenen überschreibbaren
+					Methoden.
+				</p>
 
-		<h3>Erstellung von Activities</h3>
-		<p>
-			Um eine Activity zu erstellen, muss wie bereits angesprochen eine
-			Subklasse von
-			<code>android.app.Activity</code>
-			erstellt werden. In der Subklasse muss mindestens die Methode
-			<code>onCreate()</code>
-			implementiert werden. Im einfachsten Fall wird das XML-Layout der
-			Benutzeroberfläche in dieser Methode geladen, welches dann mittels
-			der Methode
-			<code>setContentView()</code>
-			aktiviert wird. Andere wichtige Callback-Funktionen werden in den
-			Abschnitten über Zustände von Activities behandelt, da sie in diesem
-			Zusammenhang am häufigsten benötigt werden. Jede Android-Anwendung
-			besitzt auch ein Manifest. In dieser XML-Datei muss die Activity
-			eingetragen werden:
-		</p>
-		<pre class="sh_xml">&lt;activity android:name=".MyActivity" /&gt;</pre>
+				<figure>
+					<a id="lifecycle"></a>
+					<img
+						src="http://developer.android.com/images/activity_lifecycle.png" />
+					<figcaption>
+						Activity-Lebenszyklus (&copy; <a
+							href="http://developer.android.com/guide/topics/fundamentals/activities.html#Lifecycle">Google</a>)
+					</figcaption>
+				</figure>
+			</section>
 
-		<h3>Intents und Starten einer Activity</h3>
-		<p>Mit Intents beschreibt man Absichten, welche einer zu
-			startenden Activity mitgeteilt werden. Anders ausgedrückt, will man
-			eine Activity starten, so muss man ihr den Grund dafür mitteilen. Mit
-			welchen Intents eine Activity umgehen kann, wird in der
-			Manifest-Datei festgelegt. Für die Haupt-Activity ist hierfür bereits
-			ein Eintrag vorhanden:</p>
+			<section>
+				<h3>Erstellung von Activities</h3>
+				<p>
+					Um eine Activity zu erstellen, muss wie bereits angesprochen eine
+					Subklasse von
+					<code>android.app.Activity</code>
+					erstellt werden. In der Subklasse muss mindestens die Methode
+					<code>onCreate()</code>
+					implementiert werden. Im einfachsten Fall wird das XML-Layout der
+					Benutzeroberfläche in dieser Methode geladen, welches dann mittels
+					der Methode
+					<code>setContentView()</code>
+					aktiviert wird. Andere wichtige Callback-Funktionen werden in den
+					Abschnitten über Zustände von Activities behandelt, da sie in
+					diesem Zusammenhang am häufigsten benötigt werden. Jede
+					Android-Anwendung besitzt auch ein Manifest. In dieser XML-Datei
+					muss die Activity eingetragen werden:
+				</p>
+				<pre class="sh_xml">&lt;activity android:name=".MyActivity" /&gt;</pre>
+			</section>
 
-		<pre class="sh_xml">&lt;intent-filter&gt;
+			<section>
+				<h3>Intents und Starten einer Activity</h3>
+				<p>Mit Intents beschreibt man Absichten, welche einer zu
+					startenden Activity mitgeteilt werden. Anders ausgedrückt, will man
+					eine Activity starten, so muss man ihr den Grund dafür mitteilen.
+					Mit welchen Intents eine Activity umgehen kann, wird in der
+					Manifest-Datei festgelegt. Für die Haupt-Activity ist hierfür
+					bereits ein Eintrag vorhanden:</p>
+
+				<pre class="sh_xml">&lt;intent-filter&gt;
 	&lt;action android:name="android.intent.action.MAIN" /&gt;
 	&lt;category android:name="android.intent.category.LAUNCHER" /&gt;
 &lt;/intent-filter&gt;</pre>
 
-		<p>
-			Das eigentliche Starten einer Activity geschieht mit der Methode
-			<code>startActivity()</code>
-			, welche als Parameter ein Intent erhält. Ein Intent wird mit der
-			Klasse
-			<code>Intent</code>
-			erstellt. Ein Intent muss die zu startende Activity beschreiben.
-			Daher kann als Parameter für den Konstruktor eine Activity-Klasse
-			angegeben werden oder eine Aktion, die durchgeführt werden soll:
-		</p>
+				<p>
+					Das eigentliche Starten einer Activity geschieht mit der Methode
+					<code>startActivity()</code>
+					, welche als Parameter ein Intent erhält. Ein Intent wird mit der
+					Klasse
+					<code>Intent</code>
+					erstellt. Ein Intent muss die zu startende Activity beschreiben.
+					Daher kann als Parameter für den Konstruktor eine Activity-Klasse
+					angegeben werden oder eine Aktion, die durchgeführt werden soll:
+				</p>
 
-		<pre class="sh_java">Intent intent = new Intent(this, MyOtherActivity.class);
+				<pre class="sh_java">Intent intent = new Intent(this, MyOtherActivity.class);
 startActivity(intent);</pre>
 
-		<figure>
-			<pre class="sh_java" style="margin: 0px">Intent intent = new Intent(Intent.ACTION_SEND);
+				<figure>
+					<pre class="sh_java" style="margin: 0px">Intent intent = new Intent(Intent.ACTION_SEND);
 intent.putExtra(Intent.EXTRA_EMAIL, recipientArray);
 startActivity(intent);</pre>
-			<figcaption>
-				Starten einer Activity per Aktion (&copy; <a
-					href="http://developer.android.com/guide/topics/fundamentals/activities.html">Google</a>)
-			</figcaption>
-		</figure>
+					<figcaption>
+						Starten einer Activity per Aktion (&copy; <a
+							href="http://developer.android.com/guide/topics/fundamentals/activities.html">Google</a>)
+					</figcaption>
+				</figure>
 
-		<p>
-			Im zweiten Code-Beispiel wurden dem Intent noch zusätzliche Daten mit
-			der Methode
-			<code>putExtra()</code>
-			hinzugefügt. Auf diese Art ist es möglich, zwischen Activities Daten
-			auszutauschen.
-		</p>
-		<p>
-			Es gibt noch eine weitere Art, Activites zu starten. Möchte man von
-			einer Activity ein Ergebnis erhalten, so muss man die Methode
-			<code>startActivityForResult()</code>
-			verwenden. Zusätzlich muss die Methode
-			<code>onActivityResult()</code>
-			überschrieben werden, in welcher man auf das Ergebnis reagieren kann.
-		</p>
+				<p>
+					Im zweiten Code-Beispiel wurden dem Intent noch zusätzliche Daten
+					mit der Methode
+					<code>putExtra()</code>
+					hinzugefügt. Auf diese Art ist es möglich, zwischen Activities
+					Daten auszutauschen.
+				</p>
+				<p>
+					Es gibt noch eine weitere Art, Activites zu starten. Möchte man von
+					einer Activity ein Ergebnis erhalten, so muss man die Methode
+					<code>startActivityForResult()</code>
+					verwenden. Zusätzlich muss die Methode
+					<code>onActivityResult()</code>
+					überschrieben werden, in welcher man auf das Ergebnis reagieren
+					kann.
+				</p>
+			</section>
 
-		<h3>Zustand einer Activity</h3>
-		<p>Eine Besonderheit der Android-Plattform ist, dass eine Activity
-			zu jeder Zeit unterbrochen werden kann. Dies kann zum Beispiel
-			passieren, wenn eine andere Activity in den Vordergrund rückt, wie es
-			unter Anderem bei einem eingehenden Anruf der Fall ist. Dabei kann es
-			je nach Situation vorkommen, dass die Activity vom System zerstört
-			wird. Nachdem die Activity, die sich in dern Vordergrund gedrängt
-			hat, wieder beendet wurde, erwartet der Benutzer in der Regel, dass
-			er die vorherige Activity im alten Zustand vorfindet. Dieser Umstand
-			macht es nötig, den Zustand einer Activity bei Bedarf zu speichern
-			und wieder herzustellen.</p>
-		<h4>Speicherung des Zustands</h4>
-		<p>
-			Die Speicherung des Zustandes erfolgt in der Methode
-			<code>onSaveInstanceState()</code>
-			. Diese wird vom System automatisch aufgerufen, wenn es nötig ist.
-			Der Methode
-			<code>onSaveInstanceState()</code>
-			wird ein Objekt vom Typ
-			<code>Bundle</code>
-			übergeben, in welchem Daten in Schlüssel-Wert-Paaren abgelegt werden
-			können.
-		</p>
+			<section>
+				<h3>Zustand einer Activity</h3>
+				<p>Eine Besonderheit der Android-Plattform ist, dass eine
+					Activity zu jeder Zeit unterbrochen werden kann. Dies kann zum
+					Beispiel passieren, wenn eine andere Activity in den Vordergrund
+					rückt, wie es unter Anderem bei einem eingehenden Anruf der Fall
+					ist. Dabei kann es je nach Situation vorkommen, dass die Activity
+					vom System zerstört wird. Nachdem die Activity, die sich in den
+					Vordergrund gedrängt hat, wieder beendet wurde, erwartet der
+					Benutzer in der Regel, dass er die vorherige Activity im alten
+					Zustand vorfindet. Dieser Umstand macht es nötig, den Zustand einer
+					Activity bei Bedarf zu speichern und wieder herzustellen.
+					View-bezogene Daten müssen nicht selbst behandelt werden, da dies
+					bereits von der Android-Plattform getan wird.</p>
+				<h4>Speicherung des Zustands</h4>
+				<p>
+					Die Speicherung des Zustandes erfolgt in der Methode
+					<code>onSaveInstanceState()</code>
+					. Diese wird vom System automatisch aufgerufen, wenn es nötig ist.
+					Der Methode
+					<code>onSaveInstanceState()</code>
+					wird ein Objekt vom Typ
+					<code>Bundle</code>
+					übergeben, in welchem Daten in Schlüssel-Wert-Paaren abgelegt
+					werden können.
+				</p>
 
-		<h4>Wiederherstellung des Zustands</h4>
-		<p>
-			Die Methode
-			<code>onCreate()</code>
-			erhält als Parameter ein
-			<code>Bundle</code>
-			. Wurde vorher die Methode
-			<code>onSaveInstanceState()</code>
-			aufgerufen und Werte gesichert, so können diese nun beim erneuten
-			Erstellen der Activity zur Wiederherstellung des Zustandes genutzt
-			werden. Wurde
-			<code>onSaveInstanceState()</code>
-			nicht aufgerufen, so ist der
-			<code>Bundle</code>
-			-Parameter
-			<code>null</code>
-			.
-		</p>
+				<h4>Wiederherstellung des Zustands</h4>
+				<p>
+					Die Methode
+					<code>onCreate()</code>
+					erhält als Parameter ein
+					<code>Bundle</code>
+					. Wurde vorher die Methode
+					<code>onSaveInstanceState()</code>
+					aufgerufen und Werte gesichert, so können diese nun beim erneuten
+					Erstellen der Activity zur Wiederherstellung des Zustandes genutzt
+					werden. Wurde
+					<code>onSaveInstanceState()</code>
+					nicht aufgerufen, so ist der
+					<code>Bundle</code>
+					-Parameter
+					<code>null</code>
+					.
+				</p>
+			</section>
 
-		<h3>Beispiel</h3>
-		<p>Um die Fakten aus den vorherigen Abschnitten zu erproben, wird
-			nun eine kleine Beispielanwendung erstellt. Diese soll eine kurze
-			Nachricht ausgeben, wann immer eine Callback-Methode vom System
-			aufgerufen wird. Außerdem wird es einen Button geben, über den eine
-			andere Activity in den Vordergrund rückt. Daher ist das Speichern und
-			Wiederherstellen des Zustands nötig.</p>
-	</div>
+			<section>
+				<h3>Beispiel</h3>
+				<p>Um die Fakten aus den vorherigen Abschnitten zu erproben,
+					wird nun eine kleine Beispielanwendung erstellt. Diese soll eine
+					kurze Nachricht ausgeben, wann immer eine Callback-Methode vom
+					System aufgerufen wird. Wird die Orientierung der App geändert, so
+					wird diese zerstört und neu erstellt. Daher ist das Speichern und
+					Wiederherstellen des Zustands nötig.</p>
+
+				<p>
+					Als erstes wird in Eclipse ein neues Projekt mit einer Activity
+					angelegt. In der automatisch angelegten Activity werden nun als
+					erstes die Callbackmethoden aus <a href="#lifecycle">obiger
+						Abbildung</a> sowie die Methode
+					<code>onSaveInstanceState()</code>
+					implementiert. Der Code sieht nun wie folgt aus:
+				</p>
+
+				<pre class="sh_java">package de.hszg.mobileapps.lifecycle;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class LifecycleTestActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+    }
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    }
+    
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    }
+    
+    @Override
+    protected void onStop() {
+    	super.onStop();
+    }
+    
+    @Override
+    protected void onRestart() {
+    	super.onRestart();
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	super.onSaveInstanceState(outState);
+    }
+}</pre>
+
+				<p>Diesen Methoden fügen wir nun eine einfache Ausgabe hinzu, um
+					den lebenszyklus der Activity nachzuvollziehen:</p>
+
+				<pre class="sh_java">package de.hszg.mobileapps.lifecycle;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.Toast;
+
+public class LifecycleTestActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	
+    	Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	
+    	Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	
+    	Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onStop() {
+    	super.onStop();
+    	
+    	Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onRestart() {
+    	super.onRestart();
+    	
+    	Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	
+    	Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	super.onSaveInstanceState(outState);
+    	
+    	Toast.makeText(this, "onSaveInstanceState", Toast.LENGTH_SHORT).show();
+    }
+}</pre>
+
+				<p>Um das Speichern des Anwendungszustandes zu testen, wird ein
+					Textfeld zur View hinzugefügt. Dies geschieht über den grafischen
+					Editor.</p>
+
+				<p>
+					<img src="/images/lessons/basics/lifecycle_add_textfield.png"
+						alt="Textfeld hinzufügen" />
+				</p>
+
+				<p>
+					Der Inhalt des Textfeldes soll persistiert werden. Zuerst wird
+					etwas Text in das Textfeld eingegeben. Dreht man nun das Endgerät,
+					so sollte die Activity zerstört und neu erstellt werden. Dies
+					erkennt man am Aufruf der Callbackmethoden
+					<code>onDestroy()</code>
+					und
+					<code>onCreate()</code>
+					. Der eingegebene Text sollte nun wieder im Textfeld angezeigt
+					werden.
+				</p>
+
+				<p>
+					Nun werden wir eigene Daten beim Aufruf der Methode
+					<code>onSaveInstanceState()</code>
+					speichern:
+				</p>
+
+				<pre class="sh_java">@Override
+protected void onSaveInstanceState(Bundle outState) {
+	super.onSaveInstanceState(outState);
+
+	Toast.makeText(this, "onSaveInstanceState", Toast.LENGTH_SHORT).show();
+	
+	outState.putString("data", "some test data");
+}</pre>
+
+				<p>
+					Anschließend ändern wir die Methode
+					<code>onCreate()</code>
+					so ab, dass die gespeicherten Daten - falls vorhanden - ausgegeben
+					werden.
+				</p>
+
+				<pre class="sh_java">@Override
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.main);
+	
+	if (savedInstanceState == null) {
+		Toast.makeText(this, "onCreate (nothing to restore)", Toast.LENGTH_SHORT).show();
+	} else {
+		Toast.makeText(this, savedInstanceState.getString("data") + " restored", 
+			Toast.LENGTH_SHORT).show();
+	}
+}</pre>
+
+				<p>
+					Beim ersten Start der Anwendung sollten keine gespeicherten Daten
+					vorliegen. Daher wird die erste Meldung ausgegeben. Dreht man nun
+					das Endgerät, so werden wieder die Lifecycle-Callbacks aufgerufen,
+					auch
+					<code>onCreate()</code>
+					. Diesmal wird die zweite Meldung mit den gespeicherten Daten
+					angezeigt
+				</p>
+			</section>
+	</article>
 </body>
 </html>
