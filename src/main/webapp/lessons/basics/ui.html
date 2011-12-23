@@ -43,22 +43,107 @@
         	Dieses ordnet seine Kindelemente nacheinander entweder horizontal oder vertikal an.
         </p>
         <p>
-        	TODO: einfaches layout mit buttons und text
+        	Nach der Erstellung eines neuen Projekts wird die Datei <span class="tt">main.xml</span>
+        	aus dem Ordner <span class="tt">res/layout</span> geöffnet. Es öffnet sich der grafische GUI Editor.
+        	Mittels Drag 'n' Drop fügen wir der GUI nun ein <code>Texview</code> und einen <code>Button</code> hinzu:
+        </p>
+        
+        <p>
+        	<img alt="UI mit Text und Button" src="/images/lessons/basics/ui_01.png" />
+        </p>
+        
+        <p>Mit einem Rechtsklick auf ein Element kann mit dem Menupunkt <span class="tt">Edit ID</span> die ID
+        des Elementes geändert werden:</p>
+        
+        <p>
+        	<img alt="Änderung von ID's" src="/images/lessons/basics/ui_02.png" />
         </p>
         
         <h3>Ereignisse</h3>
         <p>
-        	TODO: wenn button geklickt: text ändern
+        	Beispielhaft für die Arbeit mit Ereignissen verwenden wir Button-Clicks. Um auf ein Ereignis zu reagieren, benötigen wir einen 
+        	Listener. Um diesen zu erstellen, gibt es zwei Möglichkeiten. Die erste besteht darin, in der Methode <code>onCreate()</code>
+        	der Activity eine Referenz auf den Button zu erhalten und diesem mit der Methode <code>setOnClickListener()</code> einen
+        	Listener zuzuweisen. Die zweite Möglichkeit ist die Zuweisung über den grafischen Editor. Um beide Möglichkeiten zu zeigen,
+        	wird der Benutzeroberfläche zuerst ein zweiter Button hinzugefügt. Die ID's der Buttons werden auf "button1" und "button2" geändert.
+        	Der erste Button soll programmatisch einen Listener zugeordnet bekommen. Beim zweiten Button wird dies per Editor erledigt.
+        	In beiden Fällen soll sich der Text in dem Textview-Objekt ändern.
         </p>
+        
+        <p>Das Layout sollte im XML-Code etwa wie folgt aussehen:</p>
+        <pre class="sh_xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" &gt;
+
+    &lt;TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello" /&gt;
+
+    &lt;TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" /&gt;
+
+    &lt;Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button1" /&gt;
+
+    &lt;Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button2" /&gt;
+
+&lt;/LinearLayout&gt;</pre>
+        
+        <h4>Programmatische Zuweisung eines Listeners</h4>
+        <p>Um einen Listener programmatisch zuzuweisen, muss die Methode <code>onCreate()</code> angepasst werden.
+        Zuerst wird eine Referenz auf den ersten Button benötigt. Dazu nutzt man die Methode <code>findViewById</code>.
+        Anschließend kann der Listener erzeugt werden, ähnlich wie in Swing-Applikationen. Innerhalb des Listeners werden wir wie
+        im <a href="/lessons/basics/activities">Tutorial über Activities</a> eine Nachricht ausgeben. Der Quelltext der Activity sieht anschließend
+        wie folgt aus:</p>
+        
+        <pre class="sh_java">package de.hszg.mobileapps.ui;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
+
+public class UITestActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        
+        Button button1 = (Button) findViewById(R.id.button1);
+        button1.setOnClickListener(new OnClickListener() {
+			
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Button 1 wurde gedrückt", 
+                    Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+}</pre>
+        
+        <h4>Listener per Editor setzen</h4>
+        <p></p>
         
         <h3>Menus</h3>
         <p>
         	TODO: menu um zwischen zwei Activities zu wechseln, zweite Activity erzeugt inhalt programmatisch an
         	Hand von übergebenen Daten
         </p>
-        
-        <h3>Adapter</h3>
-        <p></p>
         
         <h3>Dialoge</h3>
         <p>
