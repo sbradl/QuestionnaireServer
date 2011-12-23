@@ -5,73 +5,101 @@
 <title>Home</title>
 </head>
 <body class="lift:content_id=main">
-    <div id="main" class="lift:surround?with=default;at=content">
-        <h2>Benutzerschnittstellen</h2>
-        <h3>Einleitung</h3>
-        <p>
-            Benutzerschnittstellen bestehen in Android aus sogenannten Views und Gruppierungen
-            von Views. Dazu werden die Klassen <code>android.view.View</code> und
-            <code>android.view.ViewGroup</code> bereit gestellt. Durch Ableitung von
-            diesen Klassen werden konkrete Elemente der Benutzerschnittstelle erzeugt. Dazu gehören
-            unter anderem die Klassen <code>Button</code>, 
-            <code>CheckBox</code>, <code>LinearLayout</code>, 
-            <code>TabWidget</code> und viele weitere. Views bilden eine Hierarchie. Das heißt,
-            jedes Elemente kann optional Kindelemente besitzen.
-        </p>
-        <p>
-            Android bietet die Möglichkeit, Benutzerschnittstellen statisch oder programmatisch zu erzeugen.
-            Statisch bedeutet, dass mittels XML-Dateien die Schnittstelle beschrieben wird. Damit können
-            viele Einsatzgebiete bereits abgedeckt werden. Es kann aber auch nötig sein, eine 
-            Benutzerschnittstelle erst an Hand bestimmter Eingabedaten zur Laufzeit zu generieren.
-            Dies kann getan werden, indem konkreter Java-Code zur Instanziierung
-            der GUI-Elemente programmiert wird. Es ist aber auch möglich, XML-basierte Views zur Laufzeit
-            programmatisch zu verändern.
-        </p>
-        <p>
-        	In diesem Tutorial wird eine einfache grafische Benutzeroberfläche erstellt. Diese wird im
-        	Kern aus XML-basierten Elementen bestehen. Durch ein Menu und Ereignisse wird zwischen verschiedenen Ansichten,
-        	Activities genannt, gewechselt. Auch die programmatische Erstellung einiger Teile wird vorgestellt.
-        </p>
-        
-        
-        <h3>Layouts</h3>
-        <p>
-        	Layouts beschreiben die Anordnung von Elementen der Benutzeroberfläche.
-        	Dies geschieht vorrangig durch XML-Beschreibungen. Diese können per Hand oder durch
-        	einen grafischen Editor, welcher durch die Android Development Tools bereitgestellt wird,
-        	erzeugt werden. Am häufigsten wird das <code>LinearLayout</code> verwendet.
-        	Dieses ordnet seine Kindelemente nacheinander entweder horizontal oder vertikal an.
-        </p>
-        <p>
-        	Nach der Erstellung eines neuen Projekts wird die Datei <span class="tt">main.xml</span>
-        	aus dem Ordner <span class="tt">res/layout</span> geöffnet. Es öffnet sich der grafische GUI Editor.
-        	Mittels Drag 'n' Drop fügen wir der GUI nun ein <code>Texview</code> und einen <code>Button</code> hinzu:
-        </p>
-        
-        <p>
-        	<img alt="UI mit Text und Button" src="/images/lessons/basics/ui_01.png" />
-        </p>
-        
-        <p>Mit einem Rechtsklick auf ein Element kann mit dem Menupunkt <span class="tt">Edit ID</span> die ID
-        des Elementes geändert werden:</p>
-        
-        <p>
-        	<img alt="Änderung von ID's" src="/images/lessons/basics/ui_02.png" />
-        </p>
-        
-        <h3>Ereignisse</h3>
-        <p>
-        	Beispielhaft für die Arbeit mit Ereignissen verwenden wir Button-Clicks. Um auf ein Ereignis zu reagieren, benötigen wir einen 
-        	Listener. Um diesen zu erstellen, gibt es zwei Möglichkeiten. Die erste besteht darin, in der Methode <code>onCreate()</code>
-        	der Activity eine Referenz auf den Button zu erhalten und diesem mit der Methode <code>setOnClickListener()</code> einen
-        	Listener zuzuweisen. Die zweite Möglichkeit ist die Zuweisung über den grafischen Editor. Um beide Möglichkeiten zu zeigen,
-        	wird der Benutzeroberfläche zuerst ein zweiter Button hinzugefügt. Die ID's der Buttons werden auf "button1" und "button2" geändert.
-        	Der erste Button soll programmatisch einen Listener zugeordnet bekommen. Beim zweiten Button wird dies per Editor erledigt.
-        	In beiden Fällen soll sich der Text in dem Textview-Objekt ändern.
-        </p>
-        
-        <p>Das Layout sollte im XML-Code etwa wie folgt aussehen:</p>
-        <pre class="sh_xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+	<div id="main" class="lift:surround?with=default;at=content">
+		<h2>Benutzerschnittstellen</h2>
+		<h3>Einleitung</h3>
+		<p>
+			Benutzerschnittstellen bestehen in Android aus sogenannten Views und
+			Gruppierungen von Views. Dazu werden die Klassen
+			<code>android.view.View</code>
+			und
+			<code>android.view.ViewGroup</code>
+			bereit gestellt. Durch Ableitung von diesen Klassen werden konkrete
+			Elemente der Benutzerschnittstelle erzeugt. Dazu gehören unter
+			anderem die Klassen
+			<code>Button</code>
+			,
+			<code>CheckBox</code>
+			,
+			<code>LinearLayout</code>
+			,
+			<code>TabWidget</code>
+			und viele weitere. Views bilden eine Hierarchie. Das heißt, jedes
+			Elemente kann optional Kindelemente besitzen.
+		</p>
+		<p>Android bietet die Möglichkeit, Benutzerschnittstellen statisch
+			oder programmatisch zu erzeugen. Statisch bedeutet, dass mittels
+			XML-Dateien die Schnittstelle beschrieben wird. Damit können viele
+			Einsatzgebiete bereits abgedeckt werden. Es kann aber auch nötig
+			sein, eine Benutzerschnittstelle erst an Hand bestimmter Eingabedaten
+			zur Laufzeit zu generieren. Dies kann getan werden, indem konkreter
+			Java-Code zur Instanziierung der GUI-Elemente programmiert wird. Es
+			ist aber auch möglich, XML-basierte Views zur Laufzeit programmatisch
+			zu verändern.</p>
+		<p>In diesem Tutorial wird eine einfache grafische
+			Benutzeroberfläche erstellt. Diese wird im Kern aus XML-basierten
+			Elementen bestehen. Durch ein Menu und Ereignisse wird zwischen
+			verschiedenen Ansichten, Activities genannt, gewechselt. Auch die
+			programmatische Erstellung einiger Teile wird vorgestellt.</p>
+
+
+		<h3>Layouts</h3>
+		<p>
+			Layouts beschreiben die Anordnung von Elementen der
+			Benutzeroberfläche. Dies geschieht vorrangig durch
+			XML-Beschreibungen. Diese können per Hand oder durch einen grafischen
+			Editor, welcher durch die Android Development Tools bereitgestellt
+			wird, erzeugt werden. Am häufigsten wird das
+			<code>LinearLayout</code>
+			verwendet. Dieses ordnet seine Kindelemente nacheinander entweder
+			horizontal oder vertikal an.
+		</p>
+		<p>
+			Nach der Erstellung eines neuen Projekts wird die Datei <span
+				class="tt">main.xml</span> aus dem Ordner <span class="tt">res/layout</span>
+			geöffnet. Es öffnet sich der grafische GUI Editor. Mittels Drag 'n'
+			Drop fügen wir der GUI nun ein
+			<code>Texview</code>
+			und einen
+			<code>Button</code>
+			hinzu:
+		</p>
+
+		<p>
+			<img alt="UI mit Text und Button"
+				src="/images/lessons/basics/ui_01.png" />
+		</p>
+
+		<p>
+			Mit einem Rechtsklick auf ein Element kann mit dem Menupunkt <span
+				class="tt">Edit ID</span> die ID des Elementes geändert werden:
+		</p>
+
+		<p>
+			<img alt="Änderung von ID's" src="/images/lessons/basics/ui_02.png" />
+		</p>
+
+		<h3>Ereignisse</h3>
+		<p>
+			Beispielhaft für die Arbeit mit Ereignissen verwenden wir
+			Button-Clicks. Um auf ein Ereignis zu reagieren, benötigen wir einen
+			Listener. Um diesen zu erstellen, gibt es zwei Möglichkeiten. Die
+			erste besteht darin, in der Methode
+			<code>onCreate()</code>
+			der Activity eine Referenz auf den Button zu erhalten und diesem mit
+			der Methode
+			<code>setOnClickListener()</code>
+			einen Listener zuzuweisen. Die zweite Möglichkeit ist die Zuweisung
+			über den grafischen Editor. Um beide Möglichkeiten zu zeigen, wird
+			der Benutzeroberfläche zuerst ein zweiter Button hinzugefügt. Die
+			ID's der Buttons werden auf "button1" und "button2" geändert. Der
+			erste Button soll programmatisch einen Listener zugeordnet bekommen.
+			Beim zweiten Button wird dies per Editor erledigt. In beiden Fällen
+			soll sich der Text in dem Textview-Objekt ändern.
+		</p>
+
+		<p>Das Layout sollte im XML-Code etwa wie folgt aussehen:</p>
+		<pre class="sh_xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -101,15 +129,22 @@
         android:text="@string/button2" /&gt;
 
 &lt;/LinearLayout&gt;</pre>
-        
-        <h4>Programmatische Zuweisung eines Listeners</h4>
-        <p>Um einen Listener programmatisch zuzuweisen, muss die Methode <code>onCreate()</code> angepasst werden.
-        Zuerst wird eine Referenz auf den ersten Button benötigt. Dazu nutzt man die Methode <code>findViewById</code>.
-        Anschließend kann der Listener erzeugt werden, ähnlich wie in Swing-Applikationen. Innerhalb des Listeners werden wir wie
-        im <a href="/lessons/basics/activities">Tutorial über Activities</a> eine Nachricht ausgeben. Der Quelltext der Activity sieht anschließend
-        wie folgt aus:</p>
-        
-        <pre class="sh_java">package de.hszg.mobileapps.ui;
+
+		<h4>Programmatische Zuweisung eines Listeners</h4>
+		<p>
+			Um einen Listener programmatisch zuzuweisen, muss die Methode
+			<code>onCreate()</code>
+			angepasst werden. Zuerst wird eine Referenz auf den ersten Button
+			benötigt. Dazu nutzt man die Methode
+			<code>findViewById</code>
+			. Anschließend kann der Listener erzeugt werden, ähnlich wie in
+			Swing-Applikationen. Innerhalb des Listeners werden wir wie im <a
+				href="/lessons/basics/activities">Tutorial über Activities</a> eine
+			Nachricht ausgeben. Der Quelltext der Activity sieht anschließend wie
+			folgt aus:
+		</p>
+
+		<pre class="sh_java">package de.hszg.mobileapps.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -135,20 +170,106 @@ public class UITestActivity extends Activity {
         });
     }
 }</pre>
-        
-        <h4>Listener per Editor setzen</h4>
-        <p></p>
-        
-        <h3>Menus</h3>
-        <p>
-        	TODO: menu um zwischen zwei Activities zu wechseln, zweite Activity erzeugt inhalt programmatisch an
-        	Hand von übergebenen Daten
-        </p>
-        
-        <h3>Dialoge</h3>
-        <p>
-        	TODO: wenn zweiter Button geklickt: Dialog anzeigen
-        </p>
-    </div>
+
+		<h4>Listener per Editor setzen</h4>
+		<p>Um per Editor einen Listener zu setzen, klickt man rechts auf
+			den Button (Button 2) und wählt die Eigenschaft "OnClick" aus, wie in
+			der folgenden Abbildung ersichtlich:</p>
+
+		<p>
+			<img alt="Listener per Editor setzen"
+				src="/images/lessons/basics/ui_03.png" />
+		</p>
+
+		<p>
+			Im sich öffnenden Fenster gibt man den Namen der aufzurufenden
+			Methode an, zum Beispiel
+			<code>onButtonClicked</code>
+			. Dieser Name wird nun automatisch in die XML-Datei eingetragen:
+		</p>
+
+		<pre class="sh_xml">&lt;Button
+    android:id="@+id/button2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="onButtonClicked"
+    android:text="@string/button2" /&gt;</pre>
+
+		<p>
+			Startet man die App nun und klickt auf den zweiten Button, so erhält
+			man eine Fehlermeldung, da die angegebene Methode ja noch nicht
+			angelegt wurde. In der Activity wird nun eine Methode mit Namen
+			<code>onButtonClicked</code>
+			angelegt. Diese erwartet als Parameter ein Objekt vom Typ
+			<code>View</code>
+			:
+		</p>
+
+		<pre class="sh_java">public void onButtonClicked(View v) {
+    Toast.makeText(getApplicationContext(), "Button 2 wurde gedrückt", Toast.LENGTH_LONG).show();
+}</pre>
+
+		<p>Beide Varianten, um Ereignisse mit Listenern zu verbinden
+			werden in der Praxis eingesetzt. Welche von beiden sollte man nun
+			wählen? Wann immer möglich, ist die zweite Variante zu bevorzugen, da
+			der Java-Code besser lesbar bleibt. Die programmatische Variante wird
+			normalerweise nur gewählt, wenn auch die entsprechenden Elemente der
+			Benutzeroberfläche programmatisch erzeugt wurden, und somit das
+			Setzen des Listeners per Editor nicht möglicht ist.</p>
+
+		<h3>Menus</h3>
+		<p>
+			Im Folgenden wird ein einfaches Menu erstellt, mit dem von der
+			Haupt-Activity zu einer anderen Activity gewechselt werden kann. Dazu
+			erstellt man im Ordner <span class="tt">res</span> einen Unterordner
+			<span class="tt">menu</span>. Mittels Rechtsklick auf den neu
+			erstellten Ordner fügt man nun eine neue Android XML Datei mit dem
+			Typ "Menu" hinzu:
+		</p>
+
+		<p>
+			<img alt="Neue Android XML Datei"
+				src="/images/lessons/basics/ui_04.png" />
+		</p>
+
+		<p>
+			<img alt="Menu" src="/images/lessons/basics/ui_05.png" />
+		</p>
+
+		<p>
+			Im Editor wird nun ein neues Menu-Item hinzugefügt und ein Titel
+			angegeben. Damit das Menu angezeigt wird, muss die Methode
+			<code>onCreateOptionsMenu()</code>
+			implementiert werden:
+		</p>
+
+		<pre class="sh_java">@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.main, menu);
+
+    return true;
+}</pre>
+
+		<p>Die Aktionen, welche bei Auswahl eines Menuelementes geschehen sollen, werden in einer weiteren Methode implementiert.
+		Diese nennt sich <code>onOptionsItemSelected()</code>. Als Parameter erhält man das ausgewählt Menu-Item. Mit einer switch-Anweisung
+		kann nun das die auszuführende Aktion bestimmt werden. Im konkreten Fall soll eine neue Activity gestartet werden. Wir 
+		verwenden die eine bereits existierende Activity:</p>
+		
+		<pre class="sh_java">@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case R.id.item1:
+    	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivity(intent);
+        return true;
+    default:
+        return super.onOptionsItemSelected(item);
+    }
+}</pre>
+
+		<h3>Dialoge</h3>
+		<p>TODO: wenn zweiter Button geklickt: Dialog anzeigen</p>
+	</div>
 </body>
 </html>
