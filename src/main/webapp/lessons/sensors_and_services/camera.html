@@ -7,6 +7,92 @@
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
 		<h2>Kamera</h2>
+		<p>
+			Der Zugriff auf die Kamera kann auf zwei verschiedene Arten
+			geschehen. Entweder man verwendet direkt die Klasse <a
+				href="http://developer.android.com/reference/android/hardware/Camera.html"><code>android.hardware.Camera</code></a>
+			oder die von der Plattform bereitgestellte Kamera-App. In den meisten
+			Fällen reicht die zweite Variante aus. Daher beschäftigt sich dieses
+			Tutorial mit dieser Möglichkeit.
+		</p>
+		<p>
+			Als erstes wird eine einfache GUI mit einem Button und einem
+			ImageView-Element erstellt. Beim Klicken des Buttons soll sich die
+			Kamera-App öffnen. Das aufgenommene Bild soll anschließend in dem
+			ImageView-Element angezeigt werden. Für den Button wird über den
+			grafischen Editor eine "OnClick"-Methode festgelegt (siehe <a
+				href="/lessons/basics/ui#onClickPerEditor">UI Tutorial</a>).
+			Innerhalb dieser Methode wird ein Objekt vom Typ
+			<code>ContentValues</code>
+			erzeugt, welches einige Metadaten enthält. Anschließend wird der
+			<code>ContentResolver</code>
+			genutzt, um dem ContentProvider einen neuen Eintrag für das
+			aufzunehmende Bild hinzuzufügen. Der
+			<code>ContentResolver</code>
+			liefert eine
+			<code>Uri</code>
+			zurück, unter welcher das gespeicherte Bild erreichbar sein wird.
+			Diese
+			<code>Uri</code>
+			wird dem Intent zum Starten der Kamera-App als Extra übergeben:
+		</p>
+		<pre class="sh_java">public class CameraTestActivity extends Activity {
+
+    private static final int REQUEST_CODE = 100;
+    private Uri uri;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+    }
+
+    public void onTakePhoto(View view) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "My Image");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Image captured by camera app");
+
+        uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+}</pre>
+
+		<p>
+			Als nächstes wird die Methode
+			<code>onActivityResult()</code>
+			implementiert, um auf das Ergebnis der Kamera-App zu reagieren. Dazu wird erst der Request-Code
+			überprüft. Dieser wird benötigt, um zwischen den Ergebnissen verschiedener Intents zu unterscheiden.
+			Die Codes können selbst bestimmt werden. Um den genauen Ort des Bildes im Dateisystem zu ermitteln,
+			wird eine Abfrage gemacht. Die Abfrage wird mit der Methode <code>managedQuery()</code> durchgeführt.
+			Diese erhält als ersten Parameter die URI, welche vom <code>ContentResolver</code> erzeugt wurde.
+			Da ContentProvider ihre Daten in Tabellenform bereitstellen, kann als zweiter Parameter eine Liste von
+			Spalten angegeben werden. Dadurch kann bestimmt werden, welche Daten durch den Query geliefert werden sollen.
+			Das Feld "Data" des ContentProviders enthält bei Bildern den genauen Pfad des Bildes im Dateisystem. Dieser wird genutzt,
+			um mittels der Klasse <code>BitmapFactory</code> das Bild zu laden. Das geladene Bild kann anschließend mit der Methode
+			<code>setImageBitmap()</code> in dem ImageView-Element angezeigt werden:
+		</p>
+		
+		<pre class="sh_java">@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == REQUEST_CODE) {
+        if (resultCode == RESULT_OK) {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(uri, projection, null, null, null);
+
+            if(cursor.moveToFirst()) {
+                int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+	
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                imageView.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(index)));
+                imageView.invalidate();
+            }	
+        }
+    }
+}</pre>
 	</div>
 </body>
 </html>
