@@ -15,3 +15,11 @@ Create War Archive
 ------------------
 ./sbt
 > package
+
+Create Eclipse Project
+----------------------
+./sbt clean
+./sbt
+> eclipse
+
+In Eclipse: File -> Import... -> Existing Projects Into Workspace
