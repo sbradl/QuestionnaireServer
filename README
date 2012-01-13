@@ -10,3 +10,8 @@ Windows
 -------
 sbt.bat
 > container:start
+
+Create War Archive
+------------------
+./sbt
+> package
