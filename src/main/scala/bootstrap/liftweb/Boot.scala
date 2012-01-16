@@ -42,6 +42,8 @@ class Boot {
     if(Questionnaire.findAll isEmpty) {
       Questionnaire.createDefaultQuestionnaire
     }
+    
+    User.createAdminUserIfNecessary
 
     // where to search snippet
     LiftRules.addToPackages("code")
@@ -72,6 +74,10 @@ class Boot {
           Menu.i("BACKGROUND_SERVICES") / "lessons" / "sensors_and_services" / "background_services",
           Menu.i("PROJECT_SENSORS_AND_SERVICES")/ "lessons" / "sensors_and_services" / "project"),
         Menu.i("VISUALIZATION") / "lessons" / "visualization" / "index"
+        ),
+        Menu.i("MANAGE_QUESTIONNAIRES") / "manage" / "index" >> If(() => User.superUser_?, "Bitte melden Sie sich an") submenus(
+            Menu.i("CREATE_QUESTIONNAIRE") / "questionnaire" / "create",
+            Menu.i("ADD_QUESTION") / "question" / "add"
         ))
 
     def sitemapMutators = User.sitemapMutator
@@ -80,17 +86,6 @@ class Boot {
     // each page, just comment this line out.
     LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
 
-    //    def localeCalculator(request: Box[HTTPRequest]): java.util.Locale = {
-    //      def localeFromString(in: String): Locale = {
-    //        val x = in.split("_").toList; new Locale(x.head, x.last)
-    //      }
-    //
-    //      S.param("locale") match {
-    //        case Full(null) => Locale.getDefault()
-    //        case f @ Full(selectedLocale) => tryo(localeFromString(selectedLocale)) openOr(Locale.getDefault())
-    //        case _ => Locale.getDefault()
-    //      }
-    //    }
     def localeCalculator(request: Box[HTTPRequest]) = new Locale("de", "DE")
 
     LiftRules.localeCalculator = localeCalculator _
