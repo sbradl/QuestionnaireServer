@@ -1,11 +1,13 @@
 package code.model
 
 import net.liftweb.mapper._
+import net.liftweb.mapper.MappedField._
 import scala.xml.Node
 import net.liftweb.common.Empty
 import net.liftweb.common.Full
 import net.liftweb.common.Failure
 import scala.collection.mutable.ListBuffer
+import net.liftweb.http.S
 
 object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnaire] {
 
@@ -62,7 +64,10 @@ object Questionnaire extends Questionnaire with LongKeyedMetaMapper[Questionnair
 class Questionnaire extends LongKeyedMapper[Questionnaire] with IdPK with OneToMany[Long, Questionnaire] {
   def getSingleton = Questionnaire
 
-  object title extends MappedText(this)
+  object title extends MappedString(this, 64) {
+    override def displayName = S ? "TITLE"
+    override def validations = List(valMinLen(1, S ? "NAME_TOO_SHORT") _)
+  }
 
   object questions extends MappedOneToMany(Question, Question.questionnaire)
 

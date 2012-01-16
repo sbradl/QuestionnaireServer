@@ -75,7 +75,7 @@ class Boot {
           Menu.i("PROJECT_SENSORS_AND_SERVICES")/ "lessons" / "sensors_and_services" / "project"),
         Menu.i("VISUALIZATION") / "lessons" / "visualization" / "index"
         ),
-        Menu.i("MANAGE_QUESTIONNAIRES") / "manage" / "index" >> If(() => User.superUser_?, "Bitte melden Sie sich an") submenus(
+        Menu.i("MANAGE_QUESTIONNAIRES") / "manage" >> If(() => User.superUser_?, "Bitte melden Sie sich an") submenus(
             Menu.i("CREATE_QUESTIONNAIRE") / "questionnaire" / "create",
             Menu.i("ADD_QUESTION") / "question" / "add"
         ))
