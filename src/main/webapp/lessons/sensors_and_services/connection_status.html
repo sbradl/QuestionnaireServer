@@ -16,27 +16,33 @@
 			Für die Prüfung des Verbindgungsstatus stellt Android einen
 			Systemdienst, den Connectivity-Service, bereit. Innerhalb einer
 			Activity kann man mittels folgender Codezeile eine Instanz der Klasse
-			<code>ConnectivityManager</code> erhalten.
+			<code>ConnectivityManager</code>
+			erhalten.
 		</p>
 		<pre class="sh_java">ConnectivityManager connectivityManager 
 	= (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);</pre>
 
 		<p>
-			Die Klasse <code>ConnectivityManager</code> besitzt die
-			Method <code>getNetworkInfo()</code>. Da mobile Endgeräte
-			oft mehrere Möglichkeiten besitzen, um eine Netzwerkverbindung
-			herzustellen, muss als Parameter der Typ der Netzwerkverbindung
-			angegeben werden. Dabei kann es sich zum Beispiel um eine
-			Mobilfunkverbindung oder WLAN handeln.
+			Die Klasse
+			<code>ConnectivityManager</code>
+			besitzt die Method
+			<code>getNetworkInfo()</code>
+			. Da mobile Endgeräte oft mehrere Möglichkeiten besitzen, um eine
+			Netzwerkverbindung herzustellen, muss als Parameter der Typ der
+			Netzwerkverbindung angegeben werden. Dabei kann es sich zum Beispiel
+			um eine Mobilfunkverbindung oder WLAN handeln.
 		</p>
 		<pre class="sh_java">NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);</pre>
-		
+
 		<p>
-			Wie man sieht, erhält man ein Objekt vom Typ <code>NetworkInfo</code>. Die wichtigste
-			Methode dieser Klasse ist <code>isAvailable()</code>. 
+			Wie man sieht, erhält man ein Objekt vom Typ
+			<code>NetworkInfo</code>
+			. Die wichtigste Methode dieser Klasse ist
+			<code>isAvailable()</code>
+			.
 		</p>
-		
+
 		<pre class="sh_java">ConnectivityManager connectivityManager =
 	(ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 	
@@ -48,6 +54,13 @@ if (!wifi.isAvailable() && !mobile.isAvailable()) {
 } else {
 	System.out.println("Es besteht keine Verbindung");
 }</pre>
+
+		<p>Um den Netzwerkstatus abzufragen, müssen im Android-Manifest
+			noch entsprechende Richtlinien ergänzt werden:</p>
+
+		<pre class="sh_xml">&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/&gt;
+&lt;uses-permission android:name="android.permission.INTERNET" /&gt;</pre>
 	</div>
 </body>
 </html>
